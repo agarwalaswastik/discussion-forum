@@ -25,7 +25,7 @@ const register = [
       const newUser = new User({ ...reqBody, password: passwordHash });
       if (newUser) {
         await newUser.save();
-        res.locals.newUser = newUser.toObject();
+        res.locals.newUser = { ...newUser.toObject(), password: undefined };
         next();
       } else res.status(400).json({ error: "Invalid data" });
     } catch (error) {

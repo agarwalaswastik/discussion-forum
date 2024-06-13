@@ -3,7 +3,9 @@ import { body } from "express-validator";
 
 import register from "../controllers/register";
 import login from "../controllers/login";
+import logout from "../controllers/logout";
 import handleValidation from "../middleware/handleValidation";
+import verifyToken from "../middleware/verifyToken";
 
 const authRouter = Router();
 
@@ -25,5 +27,8 @@ authRouter.post("/login", handleValidation);
 
 // Login Controller
 authRouter.post("/login", login);
+
+// Logout Middleware and Controller
+authRouter.post("/logout", verifyToken, logout);
 
 export default authRouter;

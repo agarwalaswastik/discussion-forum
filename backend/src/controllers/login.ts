@@ -13,7 +13,7 @@ const login = [
       if (!user) return res.status(400).json({ error: "No such account found" });
 
       if (await bcrypt.compare(password, user.password)) {
-        res.locals.newUser = user;
+        res.locals.newUser = { ...user.toObject(), password: undefined };
         return next();
       }
 
@@ -24,7 +24,7 @@ const login = [
   },
   generateToken,
   (_req: Request, res: Response) => {
-    res.status(200).json(res.locals.newUser);
+    res.status(200).json({ ...res.locals.newUser, password: undefined });
   },
 ];
 
