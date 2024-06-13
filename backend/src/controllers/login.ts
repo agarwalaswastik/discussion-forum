@@ -17,14 +17,14 @@ const login = [
         return next();
       }
 
-      return res.status(400).json({ error: "Incorrect password" });
+      res.status(400).json({ error: "Incorrect password" });
     } catch (error) {
-      return next(error);
+      next(error);
     }
   },
   generateToken,
   (_req: Request, res: Response) => {
-    return res.status(200).json(res.locals.newUser);
+    res.status(200).json(res.locals.newUser);
   },
 ];
 

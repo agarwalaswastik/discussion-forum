@@ -13,8 +13,10 @@ const register = [
 
       const user = await User.findOne({ $or: [{ email: reqBody.email }, { username: reqBody.username }] });
       if (user) {
-        if (user.email === reqBody.email) return res.status(400).json({ error: "Email already exists" });
-        else return res.status(400).json({ error: "Username already exists" });
+        if (user.email === reqBody.email) res.status(400).json({ error: "Email already exists" });
+        else res.status(400).json({ error: "Username already exists" });
+
+        return;
       }
 
       const salt = await bcrypt.genSalt(10);
@@ -24,15 +26,15 @@ const register = [
       if (newUser) {
         await newUser.save();
         res.locals.newUser = newUser.toObject();
-        return next();
-      } else return res.status(400).json({ error: "Invalid data" });
+        next();
+      } else res.status(400).json({ error: "Invalid data" });
     } catch (error) {
-      return next(error);
+      next(error);
     }
   },
   generateToken,
   (_req: Request, res: Response) => {
-    return res.status(201).json(res.locals.newUser);
+    res.status(201).json(res.locals.newUser);
   },
 ];
 
