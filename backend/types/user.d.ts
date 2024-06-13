@@ -1,4 +1,6 @@
-namespace User {
+import { TimeStamp } from "./global";
+
+namespace UserTypes {
   export interface Keys {
     email: string;
     username: string;
@@ -10,6 +12,10 @@ namespace User {
     about: string;
     karma: number;
   }
+
+  export type Model = Keys & Partial<Info> & Partial<TimeStamp>;
+
+  export type ModelResponse = Omit<Model, "password">;
 }
 
-export default User;
+export default UserTypes;
