@@ -1,7 +1,9 @@
-import { NextFunction, Request, Response, Router } from "express";
-import { body, validationResult } from "express-validator";
+import { Router } from "express";
+import { body } from "express-validator";
 
 import register from "../controllers/register";
+import login from "../controllers/login";
+import handleValidation from "../middleware/handleValidation";
 
 const authRouter = Router();
 
@@ -11,14 +13,17 @@ authRouter.post("/register", registerBodyStrFields.map(field => body(field).isSt
 authRouter.post("/register", body("email").isEmail());
 authRouter.post("/register", body("password").isLength({ min: 5 }));
 authRouter.post("/register", body("password").custom((value, { req }) => value === req.body.confirmPassword));
-
-authRouter.post("/register", (req: Request, res: Response, next: NextFunction) => {
-  const result = validationResult(req);
-  if (result.isEmpty()) return next();
-  return res.status(400).json({ errors: result.array() });
-});
+authRouter.post("/register", handleValidation);
 
 // Register Controller
 authRouter.post("/register", register);
+
+// Login Validators
+const loginBodyStrFields = ["emailOrUsername", "password"];
+authRouter.post("/login", loginBodyStrFields.map(field => body(field).isString()));
+authRouter.post("/login", handleValidation);
+
+// Login Controller
+authRouter.post("/login", login);
 
 export default authRouter;

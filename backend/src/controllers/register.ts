@@ -24,15 +24,15 @@ const register = [
       if (newUser) {
         await newUser.save();
         res.locals.newUser = newUser.toObject();
-        next();
+        return next();
       } else return res.status(400).json({ error: "Invalid data" });
     } catch (error) {
-      return res.status(500).json(error);
+      return next(error);
     }
   },
   generateToken,
   (_req: Request, res: Response) => {
-    res.status(201).json(res.locals.newUser);
+    return res.status(201).json(res.locals.newUser);
   },
 ];
 
