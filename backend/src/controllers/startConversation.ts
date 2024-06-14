@@ -11,6 +11,9 @@ const startConversation = async (req: Request, res: Response, next: NextFunction
     const { otherUsername }: { otherUsername: string } = req.body;
     const user: UserTypes.Model & { _id: Types.ObjectId } = res.locals.verifiedUser;
 
+    if (otherUsername === user.username)
+      return res.status(400).json({ error: "Cannot start a conversation with yourself" });
+
     const otherUser = await User.findOne({ username: otherUsername });
     if (!otherUser) return res.status(400).json({ error: "No such user" });
 

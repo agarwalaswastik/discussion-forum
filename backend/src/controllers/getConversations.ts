@@ -5,48 +5,23 @@ import Conversation from "../models/conversationModel";
 
 import type UserTypes from "user";
 import type { Types } from "mongoose";
-import type ConversationTypes from "conversation";
 
 const getConversations = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const user: UserTypes.Model & { _id: Types.ObjectId } = res.locals.verifiedUser;
 
-    const contacterConversations = await Conversation.find({ contacterId: user._id });
-    const responderConversations = await Conversation.find({ responderId: user._id });
+    const conversations = await Conversation.find({ $or: [{ contacterId: user._id }, { responderId: user._id }] });
+    if (!conversations) return res.status(400).json({ error: "No conversations found" });
 
-    if (!contacterConversations && !responderConversations)
-      return res.status(400).json({ error: "No conversations found" });
+    const userIds: Types.ObjectId[] = [];
+    conversations.forEach((elem) => {
+      if (elem.contacterId === user._id) userIds.push(elem.responderId);
+      else userIds.push(elem.contacterId);
+    });
 
-    const contacerUsernames = await Promise.all(
-      contacterConversations.map((elem) => User.findById(elem.responderId).select("username"))
-    );
-    const responderUsernames = await Promise.all(
-      responderConversations.map((elem) => User.findById(elem.contacterId).select("username"))
-    );
+    const users = await Promise.all(userIds.map((elem) => User.findById(elem).select("-password")));
 
-    const result: { contacter: string; responder: string; messages: ConversationTypes.Message[] }[] = [];
-
-    result.push(
-      ...contacerUsernames
-        .filter((elem) => elem !== null)
-        .map((elem, index) => ({
-          contacter: user.username,
-          responder: elem!.username,
-          messages: contacterConversations[index].messages,
-        }))
-    );
-
-    result.push(
-      ...responderUsernames
-        .filter((elem) => elem !== null)
-        .map((elem, index) => ({
-          contacter: elem!.username,
-          responder: user.username,
-          messages: responderConversations[index].messages,
-        }))
-    );
-
-    res.status(200).json(result);
+    res.status(200).json({ users, conversations });
   } catch (error) {
     next(error);
   }

@@ -24,7 +24,7 @@ const login = [
   },
   generateToken,
   (_req: Request, res: Response) => {
-    res.status(200).json({ ...res.locals.newUser, password: undefined });
+    res.status(200).json(res.locals.newUser);
   },
 ];
 

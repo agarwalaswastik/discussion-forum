@@ -22,7 +22,7 @@ const sendMessage = async (req: Request, res: Response, next: NextFunction) => {
     const conversation = await Conversation.findOne({
       $or: [
         { $and: [{ contacterId: receiverUser._id }, { responderId: user._id }] },
-        { $and: [{ responderId: user._id }, { contacterId: receiverUser._id }] },
+        { $and: [{ contacterId: user._id }, { responderId: receiverUser._id }] },
       ],
     });
 
@@ -33,6 +33,7 @@ const sendMessage = async (req: Request, res: Response, next: NextFunction) => {
     conversation.messages.push(newMessage);
     
     await conversation.save();
+    res.status(201).json(newMessage);
   } catch (error) {
     next(error);
   }
