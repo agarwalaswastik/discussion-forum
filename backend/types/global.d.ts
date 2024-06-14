@@ -3,7 +3,7 @@ import { Types } from "mongoose";
 
 declare module "jsonwebtoken" {
   export interface JwtPayload {
-    _id: Types.ObjectId
+    _id: Types.ObjectId;
   }
 }
 

@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
+import type { MyRequestHandler } from "server";
 
-const logout = (_req: Request, res: Response) => {
+type RequesHandler = MyRequestHandler<object, object, object, object>;
+const logout: RequesHandler = (_req, res) => {
   res.cookie("jwt", "", { maxAge: 0 });
   res.status(200).json({ message: "Logged out successfully" });
 };

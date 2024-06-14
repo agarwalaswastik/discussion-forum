@@ -1,12 +1,15 @@
-import { NextFunction, Request, Response } from "express";
+import type { MyRequestHandler } from "server";
+
 import jwt from "jsonwebtoken";
 
-import type { Types } from "mongoose";
+type RequestHandler = MyRequestHandler<object, object, object, object>;
+const generateToken: RequestHandler = (_req, res) => {
+  if (!res.locals.verifiedUser) throw new Error("Token couldn't be generated as no verified user was found");
+  if (!process.env.JWT_SECRET) throw new Error("Token couldn't be generated as no JWT Secret was found");
 
-const generateToken = (_req: Request, res: Response, next: NextFunction) => {
-  const { _id }: { _id: Types.ObjectId } = res.locals.newUser;
+  const { _id } = res.locals.verifiedUser;
 
-  const token = jwt.sign({ _id }, process.env.JWT_SECRET!, {
+  const token = jwt.sign({ _id }, process.env.JWT_SECRET, {
     expiresIn: "15d",
   });
 
@@ -16,8 +19,6 @@ const generateToken = (_req: Request, res: Response, next: NextFunction) => {
     sameSite: "strict",
     secure: process.env.NODE_ENV !== "development",
   });
-
-  next();
 };
 
 export default generateToken;

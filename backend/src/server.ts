@@ -9,13 +9,15 @@ import mongoose from "mongoose";
 import authRouter from "./routers/authRouter";
 import conversationRouter from "./routers/conversationRouters";
 
+import readToken from "./middleware/readToken";
+
 /* Configurations */
 dotenv.config();
 const app = express();
 
 app.use(express.json());
 app.use(helmet());
-app.use(cookieParser());
+app.use(cookieParser(), readToken);
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb" }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));

@@ -1,18 +1,23 @@
-import { NextFunction, Request, Response } from "express";
+import type { MyRequestHandler } from "server";
 
 import User from "../models/userModel";
 import Conversation from "../models/conversationModel";
 
-import type UserTypes from "user";
-import type { Types } from "mongoose";
+import type ConversationTypes from "conversation";
 
-const startConversation = async (req: Request, res: Response, next: NextFunction) => {
+type ReqBody = { otherUsername?: string };
+type ResBody = { data?: ConversationTypes.Model };
+type RequesHandler = MyRequestHandler<object, ResBody, ReqBody, object>;
+const startConversation: RequesHandler = async (req, res, next) => {
   try {
-    const { otherUsername }: { otherUsername: string } = req.body;
-    const user: UserTypes.Model & { _id: Types.ObjectId } = res.locals.verifiedUser;
+    const { otherUsername } = req.body;
+    if (!otherUsername) throw new Error("Conversation couldn't be started as no other username was found");
+
+    const user = res.locals.verifiedUser;
+    if (!user) throw new Error("Conversation couldn't be started as no verified user was found");
 
     if (otherUsername === user.username)
-      return res.status(400).json({ error: "Cannot start a conversation with yourself" });
+      return res.status(400).json({ error: "Can't start a conversation with yourself" });
 
     const otherUser = await User.findOne({ username: otherUsername });
     if (!otherUser) return res.status(400).json({ error: "No such user" });
@@ -23,14 +28,13 @@ const startConversation = async (req: Request, res: Response, next: NextFunction
         { $and: [{ responderId: user._id }, { contacterId: otherUser._id }] },
       ],
     });
-
     if (existingConversation) return res.status(400).json({ error: "Conversation already exists" });
 
     const newConversation = new Conversation({ contacterId: user._id, responderId: otherUser._id });
     if (!newConversation) return res.status(400).json({ error: "Invalid data" });
 
     await newConversation.save();
-    res.status(201).json(newConversation);
+    res.status(201).json({ data: newConversation });
   } catch (error) {
     next(error);
   }

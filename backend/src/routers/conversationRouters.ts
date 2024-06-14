@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { body } from "express-validator";
 
 import verifyToken from "../middleware/verifyToken";
-import handleValidation from "../middleware/handleValidation";
+import handleValidation, { bodyStr } from "../middleware/handleValidation";
+
 import startConversation from "../controllers/startConversation";
 import getConversations from "../controllers/getConversations";
 import sendMessage from "../controllers/sendMessage";
@@ -11,22 +11,16 @@ const conversationRouter = Router();
 
 conversationRouter.use("/", verifyToken);
 
-// Start Conversation Validators
-conversationRouter.post("/", body("otherUsername").isString());
-conversationRouter.post("/", handleValidation);
+// Start Conversation
+conversationRouter.post("/", bodyStr(["otherUsername"]));
+conversationRouter.post("/", handleValidation, startConversation);
 
-// Start Conversation Controller
-conversationRouter.post("/", startConversation);
 
-// Get conversations controller
+// Get conversations
 conversationRouter.get("/", getConversations);
 
-// Send message validators
-conversationRouter.post("/:otherUsername", body("contents").isString());
-conversationRouter.post("/:otherUsername", handleValidation);
-
 // Send message
-conversationRouter.post("/:otherUsername", sendMessage);
-
+conversationRouter.post("/:otherUsername", bodyStr(["contents"]));
+conversationRouter.post("/:otherUsername", handleValidation, sendMessage);
 
 export default conversationRouter;
