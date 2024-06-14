@@ -7,7 +7,7 @@ import type UserTypes from "user";
 import type { Types } from "mongoose";
 import type ConversationTypes from "conversation";
 
-const getConversations = async (req: Request, res: Response, next: NextFunction) => {
+const getConversations = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const user: UserTypes.Model & { _id: Types.ObjectId } = res.locals.verifiedUser;
 
@@ -31,7 +31,7 @@ const getConversations = async (req: Request, res: Response, next: NextFunction)
         .filter((elem) => elem !== null)
         .map((elem, index) => ({
           contacter: user.username,
-          responder: elem.username,
+          responder: elem!.username,
           messages: contacterConversations[index].messages,
         }))
     );
@@ -40,7 +40,7 @@ const getConversations = async (req: Request, res: Response, next: NextFunction)
       ...responderUsernames
         .filter((elem) => elem !== null)
         .map((elem, index) => ({
-          contacter: elem.username,
+          contacter: elem!.username,
           responder: user.username,
           messages: responderConversations[index].messages,
         }))

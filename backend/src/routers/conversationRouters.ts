@@ -5,6 +5,7 @@ import verifyToken from "../middleware/verifyToken";
 import handleValidation from "../middleware/handleValidation";
 import startConversation from "../controllers/startConversation";
 import getConversations from "../controllers/getConversations";
+import sendMessage from "../controllers/sendMessage";
 
 const conversationRouter = Router();
 
@@ -20,6 +21,12 @@ conversationRouter.post("/", startConversation);
 // Get conversations controller
 conversationRouter.get("/", getConversations);
 
-// conversationRouter.post("/:otherUsername");
+// Send message validators
+conversationRouter.post("/:otherUsername", body("contents").isString());
+conversationRouter.post("/:otherUsername", handleValidation);
+
+// Send message
+conversationRouter.post("/:otherUsername", sendMessage);
+
 
 export default conversationRouter;
