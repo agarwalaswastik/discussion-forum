@@ -4,7 +4,7 @@ import { Types } from "mongoose";
 // create namespace to avoid crowding the global namespace
 namespace ConversationTypes {
   // a message that is sent in a direct message
-  export interface Message {
+  export interface MessageInfo {
     sender: Types.ObjectId;
     sentAt: Date;
     contents: string;
@@ -14,7 +14,7 @@ namespace ConversationTypes {
   export interface Info {
     contacter: Types.ObjectId;  // initial contacter
     responder: Types.ObjectId;  // initial responder
-    messages: Message[];
+    messages: MessageInfo[];
   }
 
   // contacter/responder is independent from sender/receiver
@@ -23,7 +23,7 @@ namespace ConversationTypes {
   // so, responder may be a sender for some messages
 
   // representation of shape of data stored in the database
-  export type Model = Info & Partial<TimeStamp>;
+  export type Model = Info & Partial<TimeStamp> & { _id: Types.ObjectId };
 }
 
 export default ConversationTypes;

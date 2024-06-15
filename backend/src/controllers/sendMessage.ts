@@ -4,20 +4,19 @@ import type ConversationTypes from "conversation";
 import User from "../models/userModel";
 import Conversation from "../models/conversationModel";
 
-
 /*
  * this controller should attempt to send a message from verified user to the username
  * specified by the parameters
- * 
+ *
  * important points
  * - a conversation must already exist between the 2 users before a message is sent
- * 
+ *
  * server-side errors that should be thrown
  * - user hasn't been verified
  */
 type Params = { otherUsername?: string };
-type ResBody = { data?: ConversationTypes.Message };
-type ReqBody =  { contents?: string; }
+type ResBody = { data?: ConversationTypes.MessageInfo };
+type ReqBody = { contents?: string };
 type RequestHandler = MyRequestHandler<Params, ResBody, ReqBody, object>;
 const sendMessage: RequestHandler = async (req, res, next) => {
   try {

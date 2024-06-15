@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema<UserTypes.Model>(
     password: { type: String, required: true },
     picturePath: String,
     about: String,
-    karma: Number,
+    karma: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

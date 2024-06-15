@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { TimeStamp } from "./global";
 
 // create namespace to avoid crowding the global namespace
@@ -17,7 +18,7 @@ namespace UserTypes {
   }
 
   // representation of shape of data stored in the database
-  export type Model = Keys & Partial<Info> & Partial<TimeStamp>;
+  export type Model = Keys & Partial<Info> & Partial<TimeStamp> & { _id: Types.ObjectId };
 
   // password is no longer needed if the user has been verified/logged in
   // any response that sends user data should also not contain the password
