@@ -5,6 +5,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
+import path from "path";
 
 import authRouter from "./routers/authRouter";
 import conversationRouter from "./routers/conversationRouters";
@@ -13,6 +14,7 @@ import userRouter from "./routers/userRouter";
 import readToken from "./middleware/readToken";
 
 // configurations
+const root = path.resolve();
 
 dotenv.config(); // get environment variables from .env file
 const app = express();
@@ -24,9 +26,12 @@ app.use(morgan("common")); // server logger
 app.use(bodyParser.json({ limit: "30mb" }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
-app.use("/auth", authRouter); // register, login, logout
-app.use("/conversation", conversationRouter); // start, get conversations and send messages
-app.use("/user", userRouter); // read, update, delete users
+app.use("/api/auth", authRouter); // register, login, logout
+app.use("/api/conversation", conversationRouter); // start, get conversations and send messages
+app.use("/api/user", userRouter); // read, update, delete users
+
+app.use("/uploads", express.static(path.join(root, "uploads")));
+app.use(express.static(path.join(root, "frontend", "dist")));
 
 const MONGO_URL = process.env.MONGO_URL || console.log("ERROR: No database found");
 const PORT = process.env.PORT || console.log("ERROR: No port found");

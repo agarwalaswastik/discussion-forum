@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "backend/dist/server.js",
   "scripts": {
-    "start": "tsc -p backend/tsconfig.json && NODE_ENV=production node backend/dist/server.js",
+    "start": "NODE_ENV=production node backend/dist/server.js",
     "dev": "NODE_ENV=development nodemon backend/src/server.ts",
-    "lint": "eslint . --ext .ts"
+    "build": "rm -rf backend/dist && tsc -p backend/tsconfig.json",
+    "lint": "eslint backend --ext .ts"
   },
   "keywords": [],
   "author": "Swastik Agarwala",
