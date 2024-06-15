@@ -1,5 +1,6 @@
 import type { MyRequestHandler } from "server";
 import type { Types } from "mongoose";
+import type { TimeStamp } from "global";
 
 import bcrypt from "bcryptjs";
 
@@ -37,7 +38,7 @@ const checkFromDatabase: CheckFromDBRequestHandler = async (req, res, next) => {
  * this controller should send a 200 success response to the client with the _id,
  * username, and email of the verified user
  */
-type ResBody = { data: { _id: Types.ObjectId; email: string; username: string } };
+type ResBody = { data: { _id: Types.ObjectId; email: string; username: string } & Partial<TimeStamp> };
 type RequestHandler = MyRequestHandler<object, ResBody, object, object>;
 const sendSuccessResponse: RequestHandler = (_req, res) => {
   const userData = res.locals.verifiedUser!;
@@ -46,6 +47,8 @@ const sendSuccessResponse: RequestHandler = (_req, res) => {
       _id: userData._id,
       email: userData.email,
       username: userData.username,
+      createdAt: userData.createdAt,
+      updatedAt: userData.updatedAt,
     },
   });
 };

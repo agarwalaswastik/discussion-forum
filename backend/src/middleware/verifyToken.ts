@@ -24,9 +24,11 @@ const verifyToken: RequestHandler = async (_req, res, next) => {
 
     // exclude password from queried user as it's no longer needed beyond this middleware
     const user = await User.findById((decoded as JwtPayload)._id).select("-password");
-    if (!user) return res.status(404).json({ error: "No such user" });
+    const userPassword = await User.findById((decoded as JwtPayload)._id).select("password");
+    if (!user || !userPassword) return res.status(404).json({ error: "No such user" });
 
     res.locals.verifiedUser = user;
+    res.locals.verifiedUserPassword = userPassword;
     next();
   } catch (error) {
     next(error);

@@ -23,7 +23,7 @@ namespace UserTypes {
   // any response that sends user data should also not contain the password
   export type ModelWithoutPassword = Omit<Model, "password">;
 
-  export type EditableFields = { username?: string; password?: string; about?: string };
+  export type EditableFields = { password?: string; about?: string };
 }
 
 export default UserTypes;

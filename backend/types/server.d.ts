@@ -5,14 +5,20 @@ import * as mongoose from "mongoose";
 // locals inside Response stores data to be shared between middleware
 // overwrite type of locals to ensure type checking while sharing data (default type is any)
 
-// these fields will surely be defined because of the way verifyToken and our models have been implemented
-interface VerifiedUser extends UserTypes.ModelWithoutPassword, mongoose.Document<mongoose.Types.ObjectId, object, UserTypes.ModelWithoutPassword> {
-  _id: mongoose.Types.ObjectId;
-}
-
 interface SharedLocals {
   jwtCookie?: string;
-  verifiedUser?: VerifiedUser;
+
+  // verifiedUser won't have password as we will remove it while querying from database
+  // this is to ensure that we never send back user password as a response
+  // we know that user document uses ObjectId for _id
+  // we know that _id must be defined when we query from database
+  verifiedUser?: UserTypes.ModelWithoutPassword &
+    mongoose.Document<mongoose.Types.ObjectId, object, UserTypes.ModelWithoutPassword> & {
+      _id: mongoose.Types.ObjectId;
+    };
+
+  // this is present to make updating password in patch user request easier
+  verifiedUserPassword?: { password: string } & mongoose.Document<unknown, object, { password: string }>;
 }
 
 // all response objects may contain an error or a message

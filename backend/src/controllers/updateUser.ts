@@ -1,6 +1,8 @@
 import type { MyRequestHandler } from "server";
 import type UserTypes from "user";
 
+import bcrypt from "bcryptjs";
+
 /*
  * this controller should attempt to update the provided user attributes
  * 
@@ -12,14 +14,18 @@ type ResBody = { data?: UserTypes.ModelWithoutPassword };
 type RequestHandler = MyRequestHandler<object, ResBody, ReqBody, object>;
 const updateUser: RequestHandler = async (req, res, next) => {
   try {
-    if (!res.locals.verifiedUser) throw new Error("Couldn't update user as no verified user was found");
+    if (!res.locals.verifiedUser || !res.locals.verifiedUserPassword) throw new Error("Couldn't update user as no verified user was found");
 
     const reqBody = req.body;
     const uploadedFile = req.file;
     const verifiedUser = res.locals.verifiedUser;
+    const verifiedUserPassword = res.locals.verifiedUserPassword;
 
-    if (reqBody.username) {
-      verifiedUser.username = reqBody.username;
+    if (reqBody.password) {
+      const salt = await bcrypt.genSalt(10);
+      const passwordHash = await bcrypt.hash(reqBody.password, salt);
+      verifiedUserPassword.password = passwordHash;
+      await verifiedUserPassword.save();
     }
 
     if (reqBody.about) {
@@ -31,6 +37,7 @@ const updateUser: RequestHandler = async (req, res, next) => {
     }
 
     await verifiedUser.save();
+
     res.status(200).json({ data: verifiedUser });
   } catch (error) {
     next(error);

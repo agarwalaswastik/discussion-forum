@@ -14,8 +14,8 @@ userRouter.get("/:username", getUser);
 // update user information
 // user needs to be verified before any changes to profile can be made
 // store picture if it was provided
-// email cannot be changed
-userRouter.patch("/", verifyToken, storeFile("picture"), bodyUndef("email"));
+// email/username cannot be changed
+userRouter.patch("/", verifyToken, storeFile("picture"), bodyUndef("email"), bodyUndef("username"));
 userRouter.patch("/", handleValidation, updateUser);
 
 export default userRouter;
