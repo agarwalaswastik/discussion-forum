@@ -22,6 +22,8 @@ namespace UserTypes {
   // password is no longer needed if the user has been verified/logged in
   // any response that sends user data should also not contain the password
   export type ModelWithoutPassword = Omit<Model, "password">;
+
+  export type EditableFields = { username?: string; password?: string; about?: string };
 }
 
 export default UserTypes;

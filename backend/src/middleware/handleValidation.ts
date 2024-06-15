@@ -2,7 +2,6 @@ import type { MyRequestHandler } from "server";
 
 import { body, validationResult } from "express-validator";
 
-
 // check if given fields exist in request body and are strings
 export const bodyStr = (fields: string[]) => fields.map((field) => body(field, `${field} isn't a string`).isString());
 
@@ -16,6 +15,9 @@ export const bodyPassword = () => body("password", "Weak password").isString().i
 export const bodyEqual = (a: string, b: string) =>
   body(a, `${a} is not equal to ${b}`).custom((value, { req }) => value === req[b]);
 
+// check if given field is undefined
+export const bodyUndef = (field: string) =>
+  body(field, `${field} cannot be used`).custom((value) => value === undefined);
 
 /*
  * this middleware should collect the results of all the validators and send a

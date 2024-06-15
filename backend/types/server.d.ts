@@ -1,11 +1,18 @@
 import * as express from "express";
 import UserTypes from "user";
+import * as mongoose from "mongoose";
 
 // locals inside Response stores data to be shared between middleware
 // overwrite type of locals to ensure type checking while sharing data (default type is any)
+
+// these fields will surely be defined because of the way verifyToken and our models have been implemented
+interface VerifiedUser extends UserTypes.ModelWithoutPassword, mongoose.Document<mongoose.Types.ObjectId, object, UserTypes.ModelWithoutPassword> {
+  _id: mongoose.Types.ObjectId;
+}
+
 interface SharedLocals {
   jwtCookie?: string;
-  verifiedUser?: UserTypes.ModelWithoutPassword & { _id: Types.ObjectId };
+  verifiedUser?: VerifiedUser;
 }
 
 // all response objects may contain an error or a message
