@@ -18,8 +18,8 @@ import generateToken from "../middleware/generateToken";
  * - user creds havn't been validated
  */
 type AddToDBReqBody = Partial<UserTypes.Keys>;
-type AddToDBRequesHandler = MyRequestHandler<object, object, AddToDBReqBody, object>;
-const addToDatabase: AddToDBRequesHandler = async (req, res, next) => {
+type AddToDBRequestHandler = MyRequestHandler<object, object, AddToDBReqBody, object>;
+const addToDatabase: AddToDBRequestHandler = async (req, res, next) => {
   try {
     const reqBody = req.body;
     if (!reqBody.email || !reqBody.username || !reqBody.password)

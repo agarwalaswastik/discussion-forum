@@ -17,7 +17,7 @@ conversationRouter.post("/", bodyStr(["otherUsername"]));
 conversationRouter.post("/", handleValidation, startConversation);
 
 
-// get conversations
+// get conversations of verified user
 conversationRouter.get("/", getConversations);
 
 // send message

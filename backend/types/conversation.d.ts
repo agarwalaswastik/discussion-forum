@@ -5,15 +5,15 @@ import { Types } from "mongoose";
 namespace ConversationTypes {
   // a message that is sent in a direct message
   export interface Message {
-    senderId: Types.ObjectId;
+    sender: Types.ObjectId;
     sentAt: Date;
     contents: string;
   }
 
   // important information about the conversation
   export interface Info {
-    contacterId: Types.ObjectId;  // initial contacter
-    responderId: Types.ObjectId;  // initial responder
+    contacter: Types.ObjectId;  // initial contacter
+    responder: Types.ObjectId;  // initial responder
     messages: Message[];
   }
 

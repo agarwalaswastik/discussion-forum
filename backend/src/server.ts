@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 
 import authRouter from "./routers/authRouter";
 import conversationRouter from "./routers/conversationRouters";
+import userRouter from "./routers/userRouter";
 
 import readToken from "./middleware/readToken";
 
@@ -24,7 +25,8 @@ app.use(bodyParser.json({ limit: "30mb" }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 app.use("/auth", authRouter); // register, login, logout
-app.use("/conversation", conversationRouter); // start conversation, get conversations, send message
+app.use("/conversation", conversationRouter); // start, get conversations and send messages
+app.use("/user", userRouter); // read, update, delete users
 
 const MONGO_URL = process.env.MONGO_URL || console.log("ERROR: No database found");
 const PORT = process.env.PORT || console.log("ERROR: No port found");

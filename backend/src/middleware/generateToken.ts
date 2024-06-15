@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken";
  * any errors are server-side problems and should be thrown to the next middleware
  */
 type RequestHandler = MyRequestHandler<object, object, object, object>;
-const generateToken: RequestHandler = (_req, res) => {
+const generateToken: RequestHandler = (_req, res, next) => {
   if (!res.locals.verifiedUser) throw new Error("Token couldn't be generated as no verified user was found");
   if (!process.env.JWT_SECRET) throw new Error("Token couldn't be generated as no JWT Secret was found");
 
@@ -24,6 +24,8 @@ const generateToken: RequestHandler = (_req, res) => {
     sameSite: "strict",
     secure: process.env.NODE_ENV !== "development",
   });
+
+  next();
 };
 
 export default generateToken;

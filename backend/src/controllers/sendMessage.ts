@@ -18,8 +18,8 @@ import Conversation from "../models/conversationModel";
 type Params = { otherUsername?: string };
 type ResBody = { data?: ConversationTypes.Message };
 type ReqBody =  { contents?: string; }
-type RequesHandler = MyRequestHandler<Params, ResBody, ReqBody, object>;
-const sendMessage: RequesHandler = async (req, res, next) => {
+type RequestHandler = MyRequestHandler<Params, ResBody, ReqBody, object>;
+const sendMessage: RequestHandler = async (req, res, next) => {
   try {
     const user = res.locals.verifiedUser;
     if (!user) throw new Error("Message couldn't be sent as no verified user was found");
@@ -35,13 +35,13 @@ const sendMessage: RequesHandler = async (req, res, next) => {
 
     const conversation = await Conversation.findOne({
       $or: [
-        { $and: [{ contacterId: receiverUser._id }, { responderId: user._id }] },
-        { $and: [{ contacterId: user._id }, { responderId: receiverUser._id }] },
+        { $and: [{ contacter: receiverUser._id }, { responder: user._id }] },
+        { $and: [{ contacter: user._id }, { responder: receiverUser._id }] },
       ],
     });
     if (!conversation) return res.status(400).json({ error: "Conversation doesn't exist" });
 
-    const newMessage = { senderId: user._id, contents, sentAt: new Date() };
+    const newMessage = { sender: user._id, contents, sentAt: new Date() };
     conversation.messages.push(newMessage);
     await conversation.save();
 
