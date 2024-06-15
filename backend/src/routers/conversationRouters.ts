@@ -9,17 +9,18 @@ import sendMessage from "../controllers/sendMessage";
 
 const conversationRouter = Router();
 
+// user should be logged in before making any requests to this route
 conversationRouter.use("/", verifyToken);
 
-// Start Conversation
+// start Conversation
 conversationRouter.post("/", bodyStr(["otherUsername"]));
 conversationRouter.post("/", handleValidation, startConversation);
 
 
-// Get conversations
+// get conversations
 conversationRouter.get("/", getConversations);
 
-// Send message
+// send message
 conversationRouter.post("/:otherUsername", bodyStr(["contents"]));
 conversationRouter.post("/:otherUsername", handleValidation, sendMessage);
 

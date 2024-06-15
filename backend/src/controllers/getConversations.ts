@@ -6,7 +6,18 @@ import type { Types } from "mongoose";
 import User from "../models/userModel";
 import Conversation from "../models/conversationModel";
 
-type ResBody = { users?: (UserTypes.ModelResponse | null)[]; conversations?: ConversationTypes.Model[] };
+/*
+ * this controller should attempt to get all the conversations data of the verified user
+ * 
+ * important points
+ * - the user data of all the users that the verified user has conversed with also has to be returned as it contains username, picturePath, etc
+ * - passwords of the other users should not be sent
+ * - it's not a problem if a user isn't found, let the front-end handle that case
+ * 
+ * server-side errors that should be thrown
+ * - user hasn't been verified
+ */
+type ResBody = { users?: (UserTypes.ModelWithoutPassword | null)[]; conversations?: ConversationTypes.Model[] };
 type RequestHandler = MyRequestHandler<object, ResBody, object, object>;
 const getConversations: RequestHandler = async (_req, res, next) => {
   try {

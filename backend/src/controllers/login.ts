@@ -6,8 +6,13 @@ import bcrypt from "bcryptjs";
 import generateToken from "../middleware/generateToken";
 import User from "../models/userModel";
 
-
-type CheckFromDBReqBody = { emailOrUsername?: string, password?: string; };
+/*
+ * this controller should check the given user creds from the database
+ *
+ * server-side errors that should be thrown
+ * - user creds havn't been validated
+ */
+type CheckFromDBReqBody = { emailOrUsername?: string; password?: string };
 type CheckFromDBRequestHandler = MyRequestHandler<object, object, CheckFromDBReqBody, object>;
 const checkFromDatabase: CheckFromDBRequestHandler = async (req, res, next) => {
   try {
@@ -28,6 +33,10 @@ const checkFromDatabase: CheckFromDBRequestHandler = async (req, res, next) => {
   }
 };
 
+/*
+ * this controller should send a 200 success response to the client with the _id,
+ * username, and email of the verified user
+ */
 type ResBody = { data: { _id: Types.ObjectId; email: string; username: string } };
 type RequestHandler = MyRequestHandler<object, ResBody, object, object>;
 const sendSuccessResponse: RequestHandler = (_req, res) => {
@@ -41,10 +50,6 @@ const sendSuccessResponse: RequestHandler = (_req, res) => {
   });
 };
 
-const login = [
-  checkFromDatabase,
-  generateToken,
-  sendSuccessResponse,
-];
+const login = [checkFromDatabase, generateToken, sendSuccessResponse];
 
 export default login;

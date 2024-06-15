@@ -9,17 +9,18 @@ import verifyToken from "../middleware/verifyToken";
 
 const authRouter = Router();
 
-// Register
+// register
 authRouter.post("/register", bodyEmail, bodyPassword);
 authRouter.post("/register", bodyStr(["username"]));
 authRouter.post("/register", bodyEqual("password", "confirmPassword"));
 authRouter.post("/register", handleValidation, register);
 
-// Login
+// login
 authRouter.post("/login", bodyStr(["emailOrUsername", "password"]));
 authRouter.post("/login", handleValidation, login);
 
-// Logout
+// logout
+// user should be logged in to make a logout request
 authRouter.post("/logout", verifyToken, logout);
 
 export default authRouter;

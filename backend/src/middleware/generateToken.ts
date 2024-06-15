@@ -2,6 +2,11 @@ import type { MyRequestHandler } from "server";
 
 import jwt from "jsonwebtoken";
 
+/*
+ * this middleware should create a jwt token for the verified user and set
+ * a cookie to store the token
+ * any errors are server-side problems and should be thrown to the next middleware
+ */
 type RequestHandler = MyRequestHandler<object, object, object, object>;
 const generateToken: RequestHandler = (_req, res) => {
   if (!res.locals.verifiedUser) throw new Error("Token couldn't be generated as no verified user was found");

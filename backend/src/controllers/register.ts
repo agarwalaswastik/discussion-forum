@@ -7,6 +7,16 @@ import bcrypt from "bcryptjs";
 import User from "../models/userModel";
 import generateToken from "../middleware/generateToken";
 
+/*
+ * this controller should create a new user in the database
+ *
+ * important points
+ * - username and email are unique fields
+ * - password should be stored as a salted hash
+ * 
+ * server-side errors that should be thrown
+ * - user creds havn't been validated
+ */
 type AddToDBReqBody = Partial<UserTypes.Keys>;
 type AddToDBRequesHandler = MyRequestHandler<object, object, AddToDBReqBody, object>;
 const addToDatabase: AddToDBRequesHandler = async (req, res, next) => {
@@ -37,6 +47,10 @@ const addToDatabase: AddToDBRequesHandler = async (req, res, next) => {
   }
 };
 
+/*
+ * this controller should send a 201 created response to the client with the _id, 
+ * username, and email of the verified user
+ */
 type ResBody = { data: { _id: Types.ObjectId; email: string; username: string } };
 type RequestHandler = MyRequestHandler<object, ResBody, object, object>;
 const sendCreatedResponse: RequestHandler = (_req, res) => {

@@ -5,6 +5,18 @@ import Conversation from "../models/conversationModel";
 
 import type ConversationTypes from "conversation";
 
+/*
+ * this controller should attempt to create a conversation between verified user and the
+ * username specified in the request body
+ * 
+ * important points:
+ * - one cannot start a conversation with themselves
+ * - a new conversation cannot be created if one already exists
+ * 
+ * server-side errors that should be thrown
+ * - user hasn't been verified
+ * - otherUsername hasn't been validated
+ */
 type ReqBody = { otherUsername?: string };
 type ResBody = { data?: ConversationTypes.Model };
 type RequesHandler = MyRequestHandler<object, ResBody, ReqBody, object>;

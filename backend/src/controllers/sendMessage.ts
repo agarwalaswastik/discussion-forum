@@ -4,6 +4,17 @@ import type ConversationTypes from "conversation";
 import User from "../models/userModel";
 import Conversation from "../models/conversationModel";
 
+
+/*
+ * this controller should attempt to send a message from verified user to the username
+ * specified by the parameters
+ * 
+ * important points
+ * - a conversation must already exist between the 2 users before a message is sent
+ * 
+ * server-side errors that should be thrown
+ * - user hasn't been verified
+ */
 type Params = { otherUsername?: string };
 type ResBody = { data?: ConversationTypes.Message };
 type ReqBody =  { contents?: string; }
@@ -17,7 +28,7 @@ const sendMessage: RequesHandler = async (req, res, next) => {
     if (!receiverUsername) return res.status(400).json({ error: "Invalid username" });
 
     const { contents } = req.body;
-    if (!contents) throw new Error("Message couldn't be sent as no contents were found");
+    if (!contents) return res.status(400).json({ error: "No message contents" });
 
     const receiverUser = await User.findOne({ username: receiverUsername });
     if (!receiverUser) return res.status(400).json({ error: "User doesn't exist" });
