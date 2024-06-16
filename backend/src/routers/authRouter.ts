@@ -10,7 +10,7 @@ import verifyToken from "../middleware/verifyToken";
 const authRouter = Router();
 
 // register
-authRouter.post("/register", bodyEmail, bodyPassword);
+authRouter.post("/register", bodyEmail(), bodyPassword());
 authRouter.post("/register", bodyStr(["username"]));
 authRouter.post("/register", bodyEqual("password", "confirmPassword"));
 authRouter.post("/register", handleValidation, register);
