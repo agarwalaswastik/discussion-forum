@@ -5,8 +5,9 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import { resetUser, selectUser } from "../features/user/userSlice";
 import MyButton from "../common/MyButton";
 import { useLogoutMutation } from "./services/auth";
+import { GiHamburgerMenu } from "react-icons/gi";
 
-export default function Navbar() {
+export default function Navbar({ onBurgerClick }: { onBurgerClick: () => void }) {
   const mode = useAppSelector(selectTheme);
   const user = useAppSelector(selectUser);
   const [logout] = useLogoutMutation();
@@ -30,9 +31,14 @@ export default function Navbar() {
 
   return (
     <nav className={navStyles}>
-      <Link to="/">
-        <h1 className={logoStyles}>greennit</h1>
-      </Link>
+      <div className="flex items-center gap-4">
+        <button className="lg:hidden" onClick={onBurgerClick}>
+          <GiHamburgerMenu />
+        </button>
+        <Link to="/">
+          <h1 className={logoStyles}>greennit</h1>
+        </Link>
+      </div>
       <ul className="flex items-center gap-4">
         <li className="flex items-center">
           <button onClick={() => dispatch(toggleTheme())}>{mode === "light" ? <FaMoon /> : <FaSun />}</button>
@@ -40,7 +46,9 @@ export default function Navbar() {
 
         {user.username && (
           <>
-            <h2 className={`text-content font-semibold text-${mode}-text`}>{user.username}</h2>
+            <Link to="/profile">
+              <h2 className={`text-content font-semibold text-${mode}-text`}>{user.username}</h2>
+            </Link>
             <MyButton onClick={handleLogout}>Logout</MyButton>
           </>
         )}

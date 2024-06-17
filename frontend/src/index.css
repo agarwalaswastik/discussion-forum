@@ -9,6 +9,12 @@
 }
 
 @layer utilities {
+  .app-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
   .text-heading {
     @apply text-xl font-bold sm:text-2xl lg:text-3xl;
   }

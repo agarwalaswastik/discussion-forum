@@ -1,7 +1,7 @@
 import { api } from "./api";
 import type { UserState } from "../../features/user/userSlice";
 
-export type RegLogResponse = NonNullable<UserState>;
+export type RegLogResponse = UserState;
 
 export interface RegisterArgs {
   email: string;

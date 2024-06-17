@@ -2,8 +2,8 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   safelist: [
-    { pattern: /bg-(light|dark)-(primary|secondary|text|accent|slate)/, variants: ["hover"] },
-    { pattern: /(border|border-b|text)-(light|dark)-(primary|secondary|text|accent|slate)/ },
+    { pattern: /bg-(light|dark)-(gray|primary|secondary|text|accent|slate)/, variants: ["hover"] },
+    { pattern: /(border|border-.|text)-(light|dark)-(primary|secondary|text|accent|slate)/ },
   ],
   theme: {
     extend: {
@@ -12,6 +12,7 @@ export default {
       },
       colors: {
         dark: {
+          gray: "#374151",
           primary: "#1f2937",
           secondary: "#111827",
           text: "#f3f4f6",
@@ -19,6 +20,7 @@ export default {
           slate: "#475569",
         },
         light: {
+          gray: "#d1d5db",
           primary: "#e5e7eb",
           secondary: "#f3f4f6",
           text: "#111827",
