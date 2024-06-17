@@ -30,8 +30,14 @@ function LoginForm() {
   return (
     <>
       <MyForm initialValues={initialValues} onSubmit={handleSubmit}>
-        <MyTextField isError={isError} id="emailOrUsername" name="emailOrUsername" placeholder="Email or Username" />
-        <MyTextField isError={isError} type="password" id="password" name="password" placeholder="Password" />
+        <MyTextField
+          isError={isError}
+          id="emailOrUsername"
+          name="emailOrUsername"
+          placeholder="Email or Username"
+          required
+        />
+        <MyTextField isError={isError} type="password" id="password" name="password" placeholder="Password" required />
       </MyForm>
       {error && <p className="text-content text-red-500">{errorMessage}</p>}
       {isLoading && <Loading />}

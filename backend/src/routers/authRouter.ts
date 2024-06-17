@@ -4,18 +4,20 @@ import register from "../controllers/register";
 import login from "../controllers/login";
 import logout from "../controllers/logout";
 
-import handleValidation, { bodyEmail, bodyEqual, bodyPassword, bodyStr } from "../middleware/handleValidation";
+import handleValidation, { bodyDef, bodyEmail, bodyEqual, bodyPassword, bodyStr } from "../middleware/handleValidation";
 import verifyToken from "../middleware/verifyToken";
 
 const authRouter = Router();
 
 // register
+authRouter.post("/register", bodyDef(["email", "username", "password", "confirmPassword"]));
 authRouter.post("/register", bodyEmail(), bodyPassword());
 authRouter.post("/register", bodyStr(["username"]));
 authRouter.post("/register", bodyEqual("password", "confirmPassword"));
 authRouter.post("/register", handleValidation, register);
 
 // login
+authRouter.post("/login", bodyDef(["emailOrUsername", "password"]));
 authRouter.post("/login", bodyStr(["emailOrUsername", "password"]));
 authRouter.post("/login", handleValidation, login);
 

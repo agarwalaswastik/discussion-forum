@@ -33,11 +33,10 @@ export const authApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Auth"],
     }),
-    logout: build.mutation<RegLogResponse, Record<string, never>>({
-      query: ({ ...logoutArgs }) => ({
+    logout: build.mutation<object, Record<string, never>>({
+      query: () => ({
         url: "/auth/logout",
         method: "POST",
-        body: logoutArgs,
       }),
       invalidatesTags: ["Auth"],
     }),

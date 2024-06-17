@@ -15,6 +15,10 @@ export const bodyPassword = () => body("password", "Weak password").isString().i
 export const bodyEqual = (a: string, b: string) =>
   body(a, `${a} is not equal to ${b}`).custom((value, { req }) => value === req.body[b]);
 
+// check if given fields are truthy
+export const bodyDef = (fields: string[]) =>
+  fields.map((field) => body(field, `No ${field} provided`).custom((value) => !!value));
+
 // check if given field is undefined
 export const bodyUndef = (field: string) =>
   body(field, `${field} cannot be used`).custom((value) => value === undefined);
