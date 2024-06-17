@@ -1,11 +1,7 @@
 import { api } from "./api";
+import type { UserState } from "../../features/user/userSlice";
 
-export interface RegLogResponse {
-  email: string;
-  username: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+export type RegLogResponse = NonNullable<UserState>;
 
 export interface RegisterArgs {
   email: string;
@@ -48,4 +44,4 @@ export const authApi = api.injectEndpoints({
   }),
 });
 
-export const { useRegisterMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation, useLogoutMutation } = authApi;

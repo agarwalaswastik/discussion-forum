@@ -1,9 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  safelist: [{ pattern: /.*-(dark|light)-(primary|secondary|text|accent|slate)/ }],
+  safelist: [
+    { pattern: /bg-(light|dark)-(primary|secondary|text|accent|slate)/, variants: ["hover"] },
+    { pattern: /(border|border-b|text)-(light|dark)-(primary|secondary|text|accent|slate)/ },
+  ],
   theme: {
     extend: {
+      spacing: {
+        120: "30rem",
+      },
       colors: {
         dark: {
           primary: "#1f2937",

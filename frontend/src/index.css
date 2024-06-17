@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  * {
+    @apply transition-colors;
+  }
+}
+
+@layer utilities {
+  .text-heading {
+    @apply text-xl font-bold sm:text-2xl lg:text-3xl;
+  }
+
+  .text-content {
+    @apply text-base md:text-lg;
+  }
+}
