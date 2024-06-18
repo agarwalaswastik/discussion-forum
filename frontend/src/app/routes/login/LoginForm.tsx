@@ -34,8 +34,17 @@ export default function LoginForm() {
           name="emailOrUsername"
           placeholder="Email or Username"
           required
+          autoComplete="username"
         />
-        <MyTextField isError={isError} type="password" id="password" name="password" placeholder="Password" required />
+        <MyTextField
+          isError={isError}
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+          autoComplete="current-password"
+        />
       </MyForm>
       {error && <p className="text-content text-red-500">{errorMessage}</p>}
       {isLoading && <Loading />}

@@ -17,7 +17,7 @@ export default function ProfilePicture({
   if (loggedInUser.username === username) self = true;
 
   return (
-    <Link to={self ? "/profile" : `/profile/${username}`}>
+    <Link className="flex items-center justify-center" to={self ? "/profile" : `/profile/${username}`}>
       <img
         src={`/${picturePath ?? "profile.svg"}`}
         alt="User's profile picture"

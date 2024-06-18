@@ -7,6 +7,13 @@ export interface GetUserArgs {
   username: string;
 }
 
+export interface PatchUserArgs {
+  password?: string;
+  about?: string;
+}
+
+export type PatchUserResponse = UserState;
+
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getUser: builder.query<GetUserResponse, GetUserArgs>({
@@ -14,8 +21,17 @@ export const userApi = api.injectEndpoints({
         url: `/user/${username}`,
         method: "GET",
       }),
+      providesTags: ["User"],
+    }),
+    patchUser: builder.mutation<PatchUserResponse, PatchUserArgs>({
+      query: ({ ...patchUserArgs }) => ({
+        url: "/user",
+        method: "PATCH",
+        body: patchUserArgs,
+      }),
+      invalidatesTags: ["User"],
     }),
   }),
 });
 
-export const { useGetUserQuery } = userApi;
+export const { useGetUserQuery, usePatchUserMutation } = userApi;

@@ -23,6 +23,10 @@
     @apply ~text-sm/xl;
   }
 
+  .text-smaller {
+    @apply ~text-xs/sm;
+  }
+
   .text-accent {
     @apply text-light-accent dark:text-dark-accent;
   }

@@ -9,8 +9,8 @@ export interface UserState {
   picturePath?: string | null | undefined;
   about?: string | null | undefined;
   karma?: number | null | undefined;
-  createdAt: Date | null;
-  updatedAt: Date | null;
+  createdAt: string | null;
+  updatedAt: string | null;
 }
 
 const initialState = { email: null, username: null, createdAt: null, updatedAt: null };

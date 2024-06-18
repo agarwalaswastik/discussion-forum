@@ -28,9 +28,24 @@ export default function RegisterForm() {
   return (
     <>
       <MyForm initialValues={initialValues} onSubmit={handleSubmit}>
-        <MyTextField isError={isError} id="email" name="email" placeholder="Email" required />
-        <MyTextField isError={isError} id="username" name="username" placeholder="Username" required />
-        <MyTextField isError={isError} type="password" id="password" name="password" placeholder="Password" required />
+        <MyTextField isError={isError} id="email" name="email" placeholder="Email" required autoComplete="email" />
+        <MyTextField
+          isError={isError}
+          id="username"
+          name="username"
+          placeholder="Username"
+          required
+          autoComplete="username"
+        />
+        <MyTextField
+          isError={isError}
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+          autoComplete="new-password"
+        />
         <MyTextField
           isError={isError}
           type="password"
@@ -38,6 +53,7 @@ export default function RegisterForm() {
           name="confirmPassword"
           placeholder="Confirm Password"
           required
+          autoComplete="new-password"
         />
       </MyForm>
       {error && <p className="text-content text-red-500">{errorMessage}</p>}

@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 
 /*
  * this controller should attempt to update the provided user attributes
- * 
+ *
  * server-side errors that should be thrown
  * - user hasn't been verified
  */
@@ -14,7 +14,8 @@ type ResBody = { data?: UserTypes.ModelWithoutPassword };
 type RequestHandler = MyRequestHandler<object, ResBody, ReqBody, object>;
 const updateUser: RequestHandler = async (req, res, next) => {
   try {
-    if (!res.locals.verifiedUser || !res.locals.verifiedUserPassword) throw new Error("Couldn't update user as no verified user was found");
+    if (!res.locals.verifiedUser || !res.locals.verifiedUserPassword)
+      throw new Error("Couldn't update user as no verified user was found");
 
     const reqBody = req.body;
     const uploadedFile = req.file;
@@ -28,7 +29,7 @@ const updateUser: RequestHandler = async (req, res, next) => {
       await verifiedUserPassword.save();
     }
 
-    if (reqBody.about) {
+    if (typeof reqBody.about === "string") {
       verifiedUser.about = reqBody.about;
     }
 
