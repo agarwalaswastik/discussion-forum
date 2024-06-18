@@ -1,11 +1,15 @@
+import fluid, { extract } from "fluid-tailwind";
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  safelist: [
-    { pattern: /bg-(light|dark)-(gray|primary|secondary|text|accent|slate)/, variants: ["hover"] },
-    { pattern: /(border|border-.|text)-(light|dark)-(primary|secondary|text|accent|slate)/ },
-  ],
+  darkMode: "selector",
+  content: { files: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"], extract },
+  safelist: [],
   theme: {
+    /** @type {import('fluid-tailwind').FluidThemeConfig} */
+    fluid: () => ({
+      defaultScreens: ["20rem", "80rem"],
+    }),
     extend: {
       spacing: {
         120: "30rem",
@@ -30,5 +34,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [fluid],
 };

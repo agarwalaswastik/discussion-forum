@@ -6,6 +6,7 @@ import { resetUser, selectUser } from "../features/user/userSlice";
 import MyButton from "../common/MyButton";
 import { useLogoutMutation } from "./services/auth";
 import { GiHamburgerMenu } from "react-icons/gi";
+import ProfilePicture from "../common/ProfilePicture";
 
 export default function Navbar({ onBurgerClick }: { onBurgerClick: () => void }) {
   const mode = useAppSelector(selectTheme);
@@ -13,9 +14,6 @@ export default function Navbar({ onBurgerClick }: { onBurgerClick: () => void })
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const logoStyles = `text-2xl font-bold sm:text-3xl lg:text-4xl text-${mode}-accent`;
-  const navStyles = `flex items-center justify-between border-b-2 p-4 lg:p-6 border-b-${mode}-slate`;
 
   const handleLogout = () => {
     (async () => {
@@ -30,15 +28,17 @@ export default function Navbar({ onBurgerClick }: { onBurgerClick: () => void })
   };
 
   return (
-    <nav className={navStyles}>
+    <nav className="border-b-slate ~p-2/4 flex items-center justify-between border-b-2">
       <div className="flex items-center gap-4">
         <button className="lg:hidden" onClick={onBurgerClick}>
           <GiHamburgerMenu />
         </button>
+
         <Link to="/">
-          <h1 className={logoStyles}>greennit</h1>
+          <h1 className="text-accent ~text-2xl/4xl font-bold">greennit</h1>
         </Link>
       </div>
+
       <ul className="flex items-center gap-4">
         <li className="flex items-center">
           <button onClick={() => dispatch(toggleTheme())}>{mode === "light" ? <FaMoon /> : <FaSun />}</button>
@@ -46,9 +46,8 @@ export default function Navbar({ onBurgerClick }: { onBurgerClick: () => void })
 
         {user.username && (
           <>
-            <Link to="/profile">
-              <h2 className={`text-content font-semibold text-${mode}-text`}>{user.username}</h2>
-            </Link>
+            <ProfilePicture className="~w-5/9 ~h-5/9" username={user.username} picturePath={user.picturePath} />
+            <h2 className="text-content hidden lg:block">{user.username}</h2>
             <MyButton onClick={handleLogout}>Logout</MyButton>
           </>
         )}

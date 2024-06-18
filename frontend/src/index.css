@@ -4,7 +4,7 @@
 
 @layer base {
   * {
-    @apply transition-colors;
+    @apply transition-colors text-light-text dark:text-dark-text;
   }
 }
 
@@ -16,10 +16,50 @@
   }
 
   .text-heading {
-    @apply text-xl font-bold sm:text-2xl lg:text-3xl;
+    @apply ~text-base/2xl font-bold;
   }
 
   .text-content {
-    @apply text-base md:text-lg;
+    @apply ~text-sm/xl;
+  }
+
+  .text-accent {
+    @apply text-light-accent dark:text-dark-accent;
+  }
+
+  .bg-primary {
+    @apply bg-light-primary dark:bg-dark-primary;
+  }
+
+  .bg-secondary {
+    @apply bg-light-secondary dark:bg-dark-secondary;
+  }
+
+  .bg-accent {
+    @apply bg-light-accent dark:bg-dark-accent;
+  }
+
+  .bg-gray {
+    @apply bg-light-gray dark:bg-dark-gray;
+  }
+
+  .border-t-slate {
+    @apply border-t-light-slate dark:border-t-dark-slate;
+  }
+
+  .border-b-slate {
+    @apply border-b-light-slate dark:border-b-dark-slate;
+  }
+
+  .border-r-slate {
+    @apply border-r-light-slate dark:border-r-dark-slate;
+  }
+
+  .border-slate {
+    @apply border-light-slate dark:border-dark-slate;
+  }
+
+  .border-accent {
+    @apply border-light-accent dark:border-dark-accent;
   }
 }

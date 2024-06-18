@@ -1,7 +1,5 @@
 import type { MyRequestHandler } from "server";
 import type UserTypes from "user";
-import type { Types } from "mongoose";
-import type { TimeStamp } from "global";
 
 import bcrypt from "bcryptjs";
 
@@ -49,21 +47,14 @@ const addToDatabase: AddToDBRequestHandler = async (req, res, next) => {
 };
 
 /*
- * this controller should send a 201 created response to the client with the _id,
- * username, and email of the verified user
+ * this controller should send a 201 created response to the client with the data of the user
  */
-type ResBody = { data: { _id: Types.ObjectId; email: string; username: string } & Partial<TimeStamp> };
+type ResBody = { data: UserTypes.ModelWithoutPassword };
 type RequestHandler = MyRequestHandler<object, ResBody, object, object>;
 const sendCreatedResponse: RequestHandler = (_req, res) => {
   const userData = res.locals.verifiedUser!;
   res.status(201).json({
-    data: {
-      _id: userData._id,
-      email: userData.email,
-      username: userData.username,
-      createdAt: userData.createdAt,
-      updatedAt: userData.updatedAt,
-    },
+    data: userData.toObject(),
   });
 };
 

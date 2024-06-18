@@ -10,11 +10,10 @@ interface MyFormAttributes<T> {
 export default function MyForm<T extends object>({ initialValues, onSubmit, children, ...props }: MyFormAttributes<T>) {
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit} {...props}>
-      <Form className="flex w-full flex-col items-center gap-2 lg:gap-4">
+      <Form className="~gap-2/4 flex w-full flex-col items-center">
         {children}
-        <MyButton className="mt-2" type="submit">
-          Submit
-        </MyButton>
+        <hr className="~h-1/2" />
+        <MyButton type="submit">Submit</MyButton>
       </Form>
     </Formik>
   );

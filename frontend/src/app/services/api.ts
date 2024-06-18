@@ -19,7 +19,7 @@ const baseQuery: BaseQueryFn<string | FetchArgs, unknown, ErrorResponse> = async
   return { data: myData.data };
 };
 
-const baseQueryWithRetries = retry(baseQuery, { maxRetries: 2 });
+const baseQueryWithRetries = retry(baseQuery, { maxRetries: 3 });
 
 export const api = createApi({
   baseQuery: baseQueryWithRetries,

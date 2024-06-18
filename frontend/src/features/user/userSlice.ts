@@ -6,6 +6,9 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export interface UserState {
   email: string | null;
   username: string | null;
+  picturePath?: string | null | undefined;
+  about?: string | null | undefined;
+  karma?: number | null | undefined;
   createdAt: Date | null;
   updatedAt: Date | null;
 }
@@ -19,12 +22,18 @@ const userSlice = createSlice({
     setUser: (state, action: PayloadAction<UserState>) => {
       state.email = action.payload.email;
       state.username = action.payload.username;
+      state.picturePath = action.payload.picturePath;
+      state.about = action.payload.about;
+      state.karma = action.payload.karma;
       state.createdAt = action.payload.createdAt;
       state.updatedAt = action.payload.updatedAt;
     },
     resetUser: (state) => {
       state.email = null;
       state.username = null;
+      state.picturePath = null;
+      state.about = null;
+      state.karma = null;
       state.createdAt = null;
       state.updatedAt = null;
     },
