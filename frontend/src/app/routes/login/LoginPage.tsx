@@ -7,7 +7,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex w-full flex-col items-center justify-center">
-      <div className="bg-secondary border-slate ~gap-4/8 sm:~w-60/120 relative m-4 mt-8 flex w-[90%] flex-col items-center rounded-lg border-2 py-8">
+      <div className="bg-secondary border-slate relative m-4 mt-8 flex w-[90%] flex-col items-center rounded-lg border-2 py-8 ~gap-4/8 sm:~w-60/120">
         <h2 className="text-heading">{register ? "Register" : "Log in"}</h2>
         {!register && <LoginForm />}
         {register && <RegisterForm />}

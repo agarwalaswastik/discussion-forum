@@ -1,9 +1,10 @@
+import { useState } from "react";
 import clsx from "clsx";
 import { Field } from "formik";
-import type { FieldAttributes } from "formik";
-import { useState } from "react";
 
-export default function MyTextField({ isError, ...props }: FieldAttributes<unknown> & { isError: boolean }) {
+import type { FieldAttributes } from "formik";
+
+export default function ThemedTextField({ isError, ...props }: FieldAttributes<unknown> & { isError: boolean }) {
   const [focused, setFocused] = useState(false);
 
   return (

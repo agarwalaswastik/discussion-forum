@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useGetUserQuery } from "../../services/user";
-import Profile from "./Profile";
+import Profile from "../../../features/user/Profile";
 
 export default function ProfilePageOther() {
   const { username } = useParams();
   const { data, isLoading, error } = useGetUserQuery({ username: username! });
-  return <Profile {...data} isLoading={isLoading} errorMessage={error?.message} />;
+  return <Profile isSelf={false} {...data} isLoading={isLoading} errorMessage={error?.message} />;
 }

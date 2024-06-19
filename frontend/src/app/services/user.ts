@@ -1,7 +1,7 @@
 import { api } from "./api";
-import type { UserState } from "../../features/user/userSlice";
+import type UserData from "../../features/user/user";
 
-export type GetUserResponse = UserState;
+export type GetUserResponse = UserData;
 
 export interface GetUserArgs {
   username: string;
@@ -12,7 +12,7 @@ export interface PatchUserArgs {
   about?: string;
 }
 
-export type PatchUserResponse = UserState;
+export type PatchUserResponse = UserData;
 
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -31,7 +31,15 @@ export const userApi = api.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    patchUserPicture: builder.mutation<PatchUserResponse, FormData>({
+      query: (formData) => ({
+        url: "/user",
+        method: "PATCH",
+        body: formData,
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useGetUserQuery, usePatchUserMutation } = userApi;
+export const { useGetUserQuery, usePatchUserMutation, usePatchUserPictureMutation } = userApi;

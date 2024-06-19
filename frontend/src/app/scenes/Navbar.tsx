@@ -1,22 +1,22 @@
 import { Link, useNavigate } from "react-router-dom";
-import { selectTheme, toggleTheme } from "../features/theme/themeSlice";
-import { useAppDispatch, useAppSelector } from "./hooks";
 import { FaMoon, FaSun } from "react-icons/fa";
-import { resetUser, selectUser } from "../features/user/userSlice";
-import MyButton from "../common/MyButton";
-import { useLogoutMutation } from "./services/auth";
 import { GiHamburgerMenu } from "react-icons/gi";
-import ProfilePicture from "../common/ProfilePicture";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { selectThemeMode, toggleTheme } from "../../features/theme/themeSlice";
+import { resetUser, selectLoggedInUser } from "../../features/user/userSlice";
+import ThemedButton from "../../common/ThemedButton";
+import ProfilePicture from "../../common/ProfilePicture";
+import { useLogoutMutation } from "../services/auth";
 
 export default function Navbar({ onBurgerClick }: { onBurgerClick: () => void }) {
-  const mode = useAppSelector(selectTheme);
-  const user = useAppSelector(selectUser);
+  const mode = useAppSelector(selectThemeMode);
+  const user = useAppSelector(selectLoggedInUser);
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    (async () => {
+    void (async () => {
       try {
         await logout({});
         dispatch(resetUser());
@@ -24,7 +24,7 @@ export default function Navbar({ onBurgerClick }: { onBurgerClick: () => void })
       } catch (error) {
         alert("Logout was unsuccesful, Please clear browsing data");
       }
-    })().catch((error) => console.log(error));
+    })();
   };
 
   return (
@@ -44,15 +44,15 @@ export default function Navbar({ onBurgerClick }: { onBurgerClick: () => void })
           <button onClick={() => dispatch(toggleTheme())}>{mode === "light" ? <FaMoon /> : <FaSun />}</button>
         </li>
 
-        {user.username && (
+        {user && (
           <>
             <ProfilePicture className="~h-5/9 ~w-5/9" username={user.username} picturePath={user.picturePath} />
             <h2 className="text-content hidden font-semibold lg:block">{user.username}</h2>
-            <MyButton onClick={handleLogout}>Logout</MyButton>
+            <ThemedButton onClick={handleLogout}>Logout</ThemedButton>
           </>
         )}
 
-        {!user.username && <MyButton onClick={() => navigate("/login")}>Login</MyButton>}
+        {!user && <ThemedButton onClick={() => navigate("/login")}>Login</ThemedButton>}
       </ul>
     </nav>
   );

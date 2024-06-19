@@ -1,10 +1,10 @@
 import { FormikHelpers } from "formik";
 import { useAppDispatch } from "../../hooks";
-import { LoginArgs, useLoginMutation } from "../../services/auth";
 import { setUser } from "../../../features/user/userSlice";
+import ThemedTextField from "../../../common/ThemedTextField";
+import LoadingOverlay from "../../../common/LoadingOverlay";
+import { LoginArgs, useLoginMutation } from "../../services/auth";
 import MyForm from "./MyForm";
-import MyTextField from "../../../common/MyTextField";
-import Loading from "../../../common/Loading";
 
 export default function LoginForm() {
   const [login, { isLoading, error, isError }] = useLoginMutation();
@@ -16,7 +16,7 @@ export default function LoginForm() {
   const handleSubmit = async (values: LoginArgs, actions: FormikHelpers<LoginArgs>) => {
     try {
       const payload = await login(values).unwrap();
-      dispatch(setUser(payload));
+      dispatch(setUser({ loggedInUser: payload }));
       actions.resetForm();
     } catch (error) {
       /* empty */
@@ -28,7 +28,7 @@ export default function LoginForm() {
   return (
     <>
       <MyForm initialValues={initialValues} onSubmit={handleSubmit}>
-        <MyTextField
+        <ThemedTextField
           isError={isError}
           id="emailOrUsername"
           name="emailOrUsername"
@@ -36,7 +36,7 @@ export default function LoginForm() {
           required
           autoComplete="username"
         />
-        <MyTextField
+        <ThemedTextField
           isError={isError}
           type="password"
           id="password"
@@ -47,7 +47,7 @@ export default function LoginForm() {
         />
       </MyForm>
       {error && <p className="text-content text-red-500">{errorMessage}</p>}
-      {isLoading && <Loading />}
+      {isLoading && <LoadingOverlay />}
     </>
   );
 }

@@ -4,19 +4,25 @@
 
 @layer base {
   * {
-    @apply transition-colors text-light-text dark:text-dark-text;
+    @apply text-light-text transition-colors dark:text-dark-text;
   }
 }
 
-@layer utilities {
+@layer components {
   .app-grid {
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-rows: auto 1fr;
   }
 
+  .icons-provider {
+    @apply fill-slate-500 ~text-xl/4xl;
+  }
+}
+
+@layer utilities {
   .text-heading {
-    @apply ~text-base/2xl font-bold;
+    @apply font-bold ~text-base/2xl;
   }
 
   .text-content {

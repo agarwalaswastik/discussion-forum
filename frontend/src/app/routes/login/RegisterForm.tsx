@@ -1,10 +1,10 @@
 import { FormikHelpers } from "formik";
 import { useAppDispatch } from "../../hooks";
-import { RegisterArgs, useRegisterMutation } from "../../services/auth";
 import { setUser } from "../../../features/user/userSlice";
+import ThemedTextField from "../../../common/ThemedTextField";
+import LoadingOverlay from "../../../common/LoadingOverlay";
+import { RegisterArgs, useRegisterMutation } from "../../services/auth";
 import MyForm from "./MyForm";
-import MyTextField from "../../../common/MyTextField";
-import Loading from "../../../common/Loading";
 
 export default function RegisterForm() {
   const [register, { isLoading, error, isError }] = useRegisterMutation();
@@ -16,7 +16,7 @@ export default function RegisterForm() {
   const handleSubmit = async (values: RegisterArgs, actions: FormikHelpers<RegisterArgs>) => {
     try {
       const payload = await register(values).unwrap();
-      dispatch(setUser(payload));
+      dispatch(setUser({ loggedInUser: payload }));
       actions.resetForm();
     } catch (error) {
       /* empty */
@@ -28,8 +28,8 @@ export default function RegisterForm() {
   return (
     <>
       <MyForm initialValues={initialValues} onSubmit={handleSubmit}>
-        <MyTextField isError={isError} id="email" name="email" placeholder="Email" required autoComplete="email" />
-        <MyTextField
+        <ThemedTextField isError={isError} id="email" name="email" placeholder="Email" required autoComplete="email" />
+        <ThemedTextField
           isError={isError}
           id="username"
           name="username"
@@ -37,7 +37,7 @@ export default function RegisterForm() {
           required
           autoComplete="username"
         />
-        <MyTextField
+        <ThemedTextField
           isError={isError}
           type="password"
           id="password"
@@ -46,7 +46,7 @@ export default function RegisterForm() {
           required
           autoComplete="new-password"
         />
-        <MyTextField
+        <ThemedTextField
           isError={isError}
           type="password"
           id="confirmPassword"
@@ -57,7 +57,7 @@ export default function RegisterForm() {
         />
       </MyForm>
       {error && <p className="text-content text-red-500">{errorMessage}</p>}
-      {isLoading && <Loading />}
+      {isLoading && <LoadingOverlay />}
     </>
   );
 }

@@ -2,40 +2,23 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import type { RootState } from "../../app/store";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import type UserData from "./user";
 
 export interface UserState {
-  email: string | null;
-  username: string | null;
-  picturePath?: string | null | undefined;
-  about?: string | null | undefined;
-  karma?: number | null | undefined;
-  createdAt: string | null;
-  updatedAt: string | null;
+  loggedInUser: UserData | null;
 }
 
-const initialState = { email: null, username: null, createdAt: null, updatedAt: null };
+const initialState = { loggedInUser: null };
 
 const userSlice = createSlice({
   name: "user",
   initialState: initialState as UserState,
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => {
-      state.email = action.payload.email;
-      state.username = action.payload.username;
-      state.picturePath = action.payload.picturePath;
-      state.about = action.payload.about;
-      state.karma = action.payload.karma;
-      state.createdAt = action.payload.createdAt;
-      state.updatedAt = action.payload.updatedAt;
+      state.loggedInUser = action.payload.loggedInUser;
     },
     resetUser: (state) => {
-      state.email = null;
-      state.username = null;
-      state.picturePath = null;
-      state.about = null;
-      state.karma = null;
-      state.createdAt = null;
-      state.updatedAt = null;
+      state.loggedInUser = null;
     },
   },
 });
@@ -44,4 +27,5 @@ export const { setUser, resetUser } = userSlice.actions;
 
 export default userSlice.reducer;
 
-export const selectUser = (state: RootState) => state.user;
+export const selectLoggedInUser = (state: RootState) => state.user.loggedInUser;
+export const selectLoggedInUsername = (state: RootState) => state.user.loggedInUser?.username;

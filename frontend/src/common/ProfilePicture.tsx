@@ -1,20 +1,18 @@
-import { selectUser } from "../features/user/userSlice";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
+import { selectLoggedInUsername } from "../features/user/userSlice";
 
-export default function ProfilePicture({
-  className,
-  picturePath,
-  username,
-}: {
+interface ProfilePictureAttributes {
   className?: string;
   username: string;
   picturePath?: string | null | undefined;
-}) {
-  const loggedInUser = useAppSelector(selectUser);
+}
+
+export default function ProfilePicture({ className, picturePath, username }: ProfilePictureAttributes) {
+  const loggedInUsername = useAppSelector(selectLoggedInUsername);
 
   let self = false;
-  if (loggedInUser.username === username) self = true;
+  if (loggedInUsername === username) self = true;
 
   return (
     <Link className="flex items-center justify-center" to={self ? "/profile" : `/profile/${username}`}>

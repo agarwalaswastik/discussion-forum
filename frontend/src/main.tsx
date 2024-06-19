@@ -6,13 +6,20 @@ import "./index.css";
 import { store, persistedStore } from "./app/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import Loading from "./common/Loading";
+import { IconContext } from "react-icons";
+import { BrowserRouter } from "react-router-dom";
+
+import Loading from "./common/LoadingOverlay";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={<Loading />} persistor={persistedStore}>
-        <App />
+        <IconContext.Provider value={{ className: "icons-provider" }}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </IconContext.Provider>
       </PersistGate>
     </Provider>
   </React.StrictMode>,

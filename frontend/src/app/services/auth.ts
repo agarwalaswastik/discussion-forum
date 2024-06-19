@@ -1,7 +1,7 @@
 import { api } from "./api";
-import type { UserState } from "../../features/user/userSlice";
+import type UserData from "../../features/user/user";
 
-export type RegLogResponse = UserState;
+export type RegLogResponse = UserData;
 
 export interface RegisterArgs {
   email: string;
