@@ -22,7 +22,7 @@ export default function App() {
       <header className="bg-secondary z-40 col-span-2">
         <Navbar onBurgerClick={() => setForceSidebar(!forceSidebar)} />
       </header>
-      <aside className={`${sidebarDisplay} bg-secondary z-40 col-start-1 row-start-2 overflow-auto lg:block`}>
+      <aside className={`${sidebarDisplay} bg-secondary z-30 col-start-1 row-start-2 overflow-auto lg:block`}>
         <Sidebar />
       </aside>
       <main className="bg-primary relative col-span-2 col-start-1 row-start-2 overflow-auto lg:col-span-1 lg:col-start-2">

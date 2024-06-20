@@ -1,5 +1,5 @@
 import { api } from "./api";
-import type UserData from "../../features/user/user";
+import type UserData from "../../types/user";
 
 export type GetUserResponse = UserData;
 

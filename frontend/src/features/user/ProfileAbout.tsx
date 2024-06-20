@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import clsx from "clsx";
-import TextInputPopup from "../../common/popup/TextInputPopup";
-import type UserData from "./user";
+import TextAreaPopup from "../../common/popup/TextAreaPopup";
+import type UserData from "../../types/user";
 import type { PatchUserArgs } from "../../app/services/user";
 
 interface ProfileAboutAttributes extends Pick<UserData, "about"> {
@@ -29,7 +29,7 @@ export default function ProfileAbout({ about, handleSave, isSelf }: ProfileAbout
           </button>
         )}
         {aboutField === null ? null : (
-          <TextInputPopup
+          <TextAreaPopup
             title="About"
             value={aboutField}
             setValue={setAboutField}

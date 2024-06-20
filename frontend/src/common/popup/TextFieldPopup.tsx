@@ -1,7 +1,7 @@
 import Popup from "./Popup";
 import ThemedButton from "../ThemedButton";
 
-interface TextInputPopupAttributes {
+interface TextFieldPopupAttributes {
   title: string;
   value: string;
   setValue: (value: string) => void;
@@ -9,14 +9,13 @@ interface TextInputPopupAttributes {
   onCancel: () => void;
 }
 
-export default function TextInputPopup({ title, value, setValue, onSave, onCancel }: TextInputPopupAttributes) {
+export default function TextFieldPopup({ title, value, setValue, onSave, onCancel }: TextFieldPopupAttributes) {
   return (
     <Popup title={title}>
-      <textarea
-        rows={10}
-        id="text-input-popup"
-        name="text-input-popup"
-        className="bg-primary border-slate focus:border-accent resize-none rounded-lg border-2 outline-none ~p-1/2"
+      <input
+        id="text-field-popup"
+        name="text-field-popup"
+        className="bg-primary border-slate focus:border-accent rounded-lg border-2 outline-none ~p-1/2"
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />

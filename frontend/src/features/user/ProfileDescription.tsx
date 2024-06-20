@@ -1,5 +1,5 @@
 import ProfilePicture from "../../common/ProfilePicture";
-import type UserData from "./user";
+import type UserData from "../../types/user";
 
 type ProfileDescriptionAttributes = Omit<UserData, "about" | "updatedAt">;
 export default function ProfileDescription({

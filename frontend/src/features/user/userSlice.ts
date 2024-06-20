@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import type { RootState } from "../../app/store";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type UserData from "./user";
+import type UserData from "../../types/user";
 
 export interface UserState {
   loggedInUser: UserData | null;

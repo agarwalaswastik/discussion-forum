@@ -5,7 +5,7 @@ import { PatchUserArgs, usePatchUserMutation } from "../../app/services/user";
 import ProfileDescription from "./ProfileDescription";
 import ProfilePictureUpload from "./ProfilePictureUpload";
 import ProfileAbout from "./ProfileAbout";
-import type UserData from "./user";
+import type UserData from "../../types/user";
 
 interface ProfileAttributes extends Partial<UserData> {
   isSelf: boolean;
