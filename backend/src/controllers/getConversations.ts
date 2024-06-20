@@ -14,7 +14,7 @@ import Conversation from "../models/conversationModel";
  * server-side errors that should be thrown
  * - user hasn't been verified
  */
-type ResBody = { conversations?: ConversationTypes.Model[] };
+type ResBody = { data?: ConversationTypes.Model[] };
 type RequestHandler = MyRequestHandler<object, ResBody, object, object>;
 const getConversations: RequestHandler = async (_req, res, next) => {
   try {
@@ -26,7 +26,7 @@ const getConversations: RequestHandler = async (_req, res, next) => {
       .populate("responder", "-password");
     if (!conversations) return res.status(400).json({ error: "No conversations found" });
 
-    res.status(200).json({ conversations });
+    res.status(200).json({ data: conversations });
   } catch (error) {
     next(error);
   }

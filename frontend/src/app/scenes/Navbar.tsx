@@ -18,8 +18,8 @@ export default function Navbar({ onBurgerClick }: { onBurgerClick: () => void })
   const handleLogout = () => {
     void (async () => {
       try {
-        await logout({});
         dispatch(resetUser());
+        await logout({});
         alert("Logged out Succesfully");
       } catch (error) {
         alert("Logout was unsuccesful, Please clear browsing data");

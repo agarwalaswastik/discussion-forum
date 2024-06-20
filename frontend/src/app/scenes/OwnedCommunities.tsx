@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { IoAdd } from "react-icons/io5";
 import TextFieldPopup from "../../common/popup/TextFieldPopup";
-import { useStartCommunityMutation } from "../services/community";
+import { useGetOwnedCommunitiesQuery, useStartCommunityMutation } from "../services/community";
 import LoadingOverlay from "../../common/LoadingOverlay";
+import SidebarLink from "./SidebarLink";
+import CommunityPicture from "../../common/CommunityPicture";
 
 export default function OwnedCommunities() {
-  const [startCommunity, { isLoading, error }] = useStartCommunityMutation();
+  const [startCommunity, { isLoading: isStartLoading, error: startError }] = useStartCommunityMutation();
+  const { data: ownedData } = useGetOwnedCommunitiesQuery({});
   const [commName, setCommName] = useState<string | null>(null);
 
-  const errorMessage = error?.message;
+  const errorMessage = startError?.message;
 
   const handleSave = () => {
     void (async () => {
@@ -40,7 +43,13 @@ export default function OwnedCommunities() {
           onCancel={() => setCommName(null)}
         />
       )}
-      {isLoading && <LoadingOverlay />}
+      {isStartLoading && <LoadingOverlay />}
+      {ownedData?.map((comm) => (
+        <SidebarLink key={comm.name} url={`/community/${comm.name}`}>
+          <CommunityPicture className="~h-5/9 ~w-5/9" picturePath={comm.picturePath} />
+          <p>g/{comm.name}</p>
+        </SidebarLink>
+      ))}
     </>
   );
 }

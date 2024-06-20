@@ -7,6 +7,8 @@ export interface StartCommunityArgs {
 
 export type StartCommunityResponse = CommunityData;
 
+export type GetOwnedCommunitiesResponse = { name: string; picturePath?: string }[];
+
 export const communityApi = api.injectEndpoints({
   endpoints: (builder) => ({
     startCommunity: builder.mutation<StartCommunityResponse, StartCommunityArgs>({
@@ -15,9 +17,16 @@ export const communityApi = api.injectEndpoints({
         method: "POST",
         body: startCommunityArgs,
       }),
-      invalidatesTags: ["Community"],
+      invalidatesTags: ["OwnedCommunities"],
+    }),
+    getOwnedCommunities: builder.query<GetOwnedCommunitiesResponse, Record<string, never>>({
+      query: () => ({
+        url: "/community/owned",
+        method: "GET",
+      }),
+      providesTags: ["OwnedCommunities"],
     }),
   }),
 });
 
-export const { useStartCommunityMutation } = communityApi;
+export const { useStartCommunityMutation, useGetOwnedCommunitiesQuery } = communityApi;

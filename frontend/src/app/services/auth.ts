@@ -23,7 +23,7 @@ export const authApi = api.injectEndpoints({
         method: "POST",
         body: registerArgs,
       }),
-      invalidatesTags: ["Auth"],
+      invalidatesTags: ["Auth", "OwnedCommunities"],
     }),
     login: build.mutation<RegLogResponse, LoginArgs>({
       query: ({ ...loginArgs }) => ({
@@ -31,14 +31,14 @@ export const authApi = api.injectEndpoints({
         method: "POST",
         body: loginArgs,
       }),
-      invalidatesTags: ["Auth"],
+      invalidatesTags: ["Auth", "OwnedCommunities"],
     }),
     logout: build.mutation<object, Record<string, never>>({
       query: () => ({
         url: "/auth/logout",
         method: "POST",
       }),
-      invalidatesTags: ["Auth"],
+      invalidatesTags: ["Auth", "OwnedCommunities"],
     }),
   }),
 });
