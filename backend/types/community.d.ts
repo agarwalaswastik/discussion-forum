@@ -12,6 +12,8 @@ namespace CommunityTypes {
     members?: Types.ObjectId[];
   }
 
+  export type EditableFields = Pick<Info, "description">;
+
   export type Model = Info & Partial<TimeStamp> & { _id: Types.ObjectId };
 }
 

@@ -9,6 +9,7 @@ import { selectLoggedInUsername } from "../features/user/userSlice";
 import { selectThemeMode } from "../features/theme/themeSlice";
 import Sidebar from "./scenes/Sidebar";
 import Navbar from "./scenes/Navbar";
+import CommunityPage from "./routes/community/CommunityPage";
 
 export default function App() {
   const mode = useAppSelector(selectThemeMode);
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="/login" element={loggedInUsername ? <Navigate to="/" /> : <LoginPage />} />
           <Route path="/profile" element={loggedInUsername ? <ProfilePage /> : <Navigate to="/login" />} />
           <Route path="/profile/:username" element={<ProfilePage />} />
+          <Route path="/community/:name" element={<CommunityPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
