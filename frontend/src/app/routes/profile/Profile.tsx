@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
-import { setUser } from "./userSlice";
-import LoadingOverlay from "../../common/LoadingOverlay";
-import { PatchUserArgs, usePatchUserMutation } from "../../app/services/user";
+import { setUser } from "../../../features/user/userSlice";
+import LoadingOverlay from "../../../common/LoadingOverlay";
+import { PatchUserArgs, usePatchUserMutation } from "../../services/user";
 import ProfileDescription from "./ProfileDescription";
 import ProfilePictureUpload from "./ProfilePictureUpload";
 import ProfileAbout from "./ProfileAbout";
-import type UserData from "../../types/user";
+import type UserData from "../../../types/user";
 
 interface ProfileAttributes extends Partial<UserData> {
   isSelf: boolean;

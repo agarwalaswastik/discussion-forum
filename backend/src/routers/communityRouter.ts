@@ -7,6 +7,7 @@ import storeFile from "../middleware/storeFile";
 import updateCommunity from "../controllers/updateCommunity";
 import getCommunity from "../controllers/getCommunity";
 import deleteCommunity from "../controllers/deleteCommunity";
+import memberCommunity from "../controllers/memberCommunity";
 
 const communityRouter = Router();
 
@@ -25,9 +26,9 @@ communityRouter.patch("/:name", handleValidation, updateCommunity);
 communityRouter.get("/:name", getCommunity);
 
 // delete community
-communityRouter.delete("/:name", deleteCommunity);
+communityRouter.delete("/:name", verifyToken, deleteCommunity);
 
 // switch community membership
-communityRouter.patch("/:name");
+communityRouter.patch("/:name/member", verifyToken, memberCommunity);
 
 export default communityRouter;

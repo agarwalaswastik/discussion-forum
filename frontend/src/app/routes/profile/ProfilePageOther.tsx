@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useGetUserQuery } from "../../services/user";
-import Profile from "../../../features/user/Profile";
+import Profile from "./Profile";
 
 export default function ProfilePageOther() {
   const { username } = useParams();

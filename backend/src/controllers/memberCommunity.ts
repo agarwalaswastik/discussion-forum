@@ -23,7 +23,7 @@ const memberCommunity: RequestHandler = async (req, res, next) => {
     const community = await Community.findOne({ name });
     if (!community || community.members === undefined) return res.status(400).json({ error: "No such community" });
 
-    if (community.owner === res.locals.verifiedUser._id)
+    if (community.owner.equals(res.locals.verifiedUser._id))
       return res.status(400).json({ error: "Can't leave your owned community" });
 
     const index = community.members.indexOf(res.locals.verifiedUser._id);

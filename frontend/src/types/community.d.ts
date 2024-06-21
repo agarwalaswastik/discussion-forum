@@ -1,9 +1,9 @@
 interface CommunityData {
-  owner: string;
+  owner: { username: string };
   name: string;
   description?: string;
   picturePath?: string;
-  members?: string[];
+  members: { username: string }[];
 }
 
 export default CommunityData;

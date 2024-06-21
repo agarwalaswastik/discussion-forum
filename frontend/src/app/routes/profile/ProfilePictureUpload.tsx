@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
-import { setUser } from "./userSlice";
-import LoadingOverlay from "../../common/LoadingOverlay";
-import { usePatchUserPictureMutation } from "../../app/services/user";
+import { setUser } from "../../../features/user/userSlice";
+import LoadingOverlay from "../../../common/LoadingOverlay";
+import { usePatchUserPictureMutation } from "../../../app/services/user";
 
 export default function ProfilePictureUpload() {
   const [patchUserPicture, { isLoading, error }] = usePatchUserPictureMutation();
@@ -29,7 +29,7 @@ export default function ProfilePictureUpload() {
     <div>
       <label
         htmlFor="picture"
-        className="text-accent border-accent hover:bg-accent cursor-pointer rounded-md border px-2 py-1 hover:text-dark-text"
+        className="text-accent border-accent hover:bg-accent cursor-pointer rounded-md border-2 ~px-2/4 ~py-1/2 hover:text-dark-text"
       >
         Change Picture
       </label>

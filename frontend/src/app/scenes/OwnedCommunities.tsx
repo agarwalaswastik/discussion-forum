@@ -5,18 +5,21 @@ import { useGetOwnedCommunitiesQuery, useStartCommunityMutation } from "../servi
 import LoadingOverlay from "../../common/LoadingOverlay";
 import SidebarLink from "./SidebarLink";
 import CommunityPicture from "../../common/CommunityPicture";
+import { useNavigate } from "react-router-dom";
 
 export default function OwnedCommunities() {
   const [startCommunity, { isLoading: isStartLoading, error: startError }] = useStartCommunityMutation();
   const { data: ownedData } = useGetOwnedCommunitiesQuery({});
   const [commName, setCommName] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const errorMessage = startError?.message;
 
   const handleSave = () => {
     void (async () => {
-      await startCommunity({ name: commName! });
       setCommName(null);
+      await startCommunity({ name: commName! });
+      navigate(`/community/${commName!}`);
     })();
   };
 

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import clsx from "clsx";
-import TextAreaPopup from "../../common/popup/TextAreaPopup";
-import type UserData from "../../types/user";
-import type { PatchUserArgs } from "../../app/services/user";
+import TextAreaPopup from "../../../common/popup/TextAreaPopup";
+import type UserData from "../../../types/user";
+import type { PatchUserArgs } from "../../services/user";
 
 interface ProfileAboutAttributes extends Pick<UserData, "about"> {
   handleSave: (args: PatchUserArgs) => Promise<void>;

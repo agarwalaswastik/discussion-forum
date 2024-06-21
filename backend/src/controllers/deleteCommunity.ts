@@ -20,7 +20,7 @@ const deleteCommunity: RequestHandler = async (req, res, next) => {
     const community = await Community.findOne({ name });
     if (!community) return res.status(400).json({ error: "No such community" });
 
-    if (community.owner !== res.locals.verifiedUser._id) return res.status(401).json({ error: "Unauthorized delete" });
+    if (!community.owner.equals(res.locals.verifiedUser._id)) return res.status(401).json({ error: "Unauthorized delete" });
 
     await community.deleteOne();
     res.status(200).json({ message: "Community deleted successfully" });
