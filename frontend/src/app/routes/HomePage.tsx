@@ -1,10 +1,21 @@
 import LoadingOverlay from "../../common/LoadingOverlay";
 import PostWidget from "../../common/PostWidget";
+import { selectLoggedInUsername } from "../../features/user/userSlice";
+import { useAppSelector } from "../hooks";
 import { useGetHomePostsQuery } from "../services/post";
 
 export default function HomePage() {
   const { data, isLoading, error } = useGetHomePostsQuery({});
+  const loggedInUsername = useAppSelector(selectLoggedInUsername);
+
   const errorMessage = error?.message;
+
+  if (!loggedInUsername)
+    return (
+      <div className="flex h-full items-center justify-center">
+        <h2 className="text-heading">Login to see Home Page</h2>
+      </div>
+    );
 
   if (isLoading || !data) return <LoadingOverlay />;
 
