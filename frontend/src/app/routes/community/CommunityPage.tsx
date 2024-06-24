@@ -4,6 +4,7 @@ import { useGetCommunityQuery } from "../../services/community";
 import LoadingOverlay from "../../../common/LoadingOverlay";
 import clsx from "clsx";
 import CommunityOptions from "./CommunityOptions";
+import PostList from "../../../common/PostList";
 
 export default function CommunityPage() {
   const { name } = useParams();
@@ -28,7 +29,10 @@ export default function CommunityPage() {
       <div className="~mb-12/24">
         <div className="border-slate bg-secondary relative w-full rounded-md border-2 ~h-20/40">
           <div className="absolute left-[5%] top-full flex -translate-y-1/4 items-center ~gap-2/4">
-            <CommunityPicture picturePath={data?.picturePath} className="border-slate rounded-xl border-2 ~h-16/32 ~w-16/32" />
+            <CommunityPicture
+              picturePath={data?.picturePath}
+              className="border-slate rounded-xl border-2 ~h-16/32 ~w-16/32"
+            />
             <h2 className="~text-3xl/6xl">g/{commData.name}</h2>
           </div>
         </div>
@@ -37,6 +41,7 @@ export default function CommunityPage() {
         {commData.description ? commData.description : "*No description provided"}
       </p>
       <CommunityOptions commData={commData} />
+      <PostList communityName={name} />
     </div>
   );
 }

@@ -18,29 +18,36 @@ const votePost: RequestHandler = async (req, res, next) => {
     if (!user) throw new Error("Couldn't vote post as no verified user was found");
 
     const { id: _id } = req.params;
-    if (!_id) return res.status(200).json({ error: "No such post" });
+    if (!_id) return res.status(400).json({ error: "No such post" });
 
     const post = await Post.findById(_id);
-    if (!post || !post.upvoters || !post.downvoters) return res.status(200).json({ error: "No such post" });
+    if (!post || !post.upvoters || !post.downvoters) return res.status(400).json({ error: "No such post" });
 
     const { action } = req.body;
     if (action !== "upvote" && action !== "downvote")
-      return res.status(200).json({ error: 'action should be "upvote" or "downvote"' });
+      return res.status(400).json({ error: 'action should be "upvote" or "downvote"' });
 
+    const upvoteIndex = post.upvoters.indexOf(user._id);
+    const downvoteIndex = post.downvoters.indexOf(user._id);
+
+    if (upvoteIndex > -1) {
+      post.upvoters.splice(upvoteIndex, 1);
+    }
+
+    if (downvoteIndex > -1) {
+      post.downvoters.splice(downvoteIndex, 1);
+    }
+    
     if (action === "upvote") {
-      const index = post.upvoters.indexOf(user._id);
-      if (index > 1) {
-        post.upvoters.splice(index, 1);
-      } else {
+      if (upvoteIndex <= -1) {
         post.upvoters.push(user._id);
       }
-    } else {
-      const index = post.downvoters.indexOf(user._id);
-      if (index > 1) {
-        post.downvoters.splice(index, 1);
-      } else {
+    } else if (action === "downvote") {
+      if (downvoteIndex <= -1) {
         post.downvoters.push(user._id);
       }
+    } else {
+      return res.status(400).json({ error: "action should be upvote/downvote" });
     }
 
     await post.save();

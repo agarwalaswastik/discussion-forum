@@ -9,16 +9,15 @@ type Query = { community?: string; author?: string };
 type RequestHandler = MyRequestHandler<object, ResBody, object, Query>;
 const getPosts: RequestHandler = async (req, res, next) => {
   try {
-    const user = res.locals.verifiedUser;
-    if (!user) throw new Error("Posts couldn't be queried as no verified user was found");
-
     const { community: communityName, author: authorName } = req.query;
 
     const posts = await Post.find()
       .populate("author", "username")
       .populate("community", "name")
       .populate("upvoters", "username")
-      .populate("downvoters", "username");
+      .populate("downvoters", "username")
+      .sort({ createdAt: -1 });
+
     const queriedPosts = posts.filter((post) => {
       let result: boolean = true;
       const community = post.community as unknown as { name: string };

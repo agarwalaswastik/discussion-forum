@@ -36,7 +36,9 @@ export default function PostPopup({ onComplete }: { onComplete: () => void }) {
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({ setFieldValue }) => (
           <Form className="flex w-full flex-col items-center ~gap-2/4">
-            {imgURL && <img src={imgURL} alt="Post Image" className="border-slate aspect-square w-5/6 border-2" />}
+            {imgURL && (
+              <img src={imgURL} alt="Post Image" className="border-slate aspect-square w-5/6 rounded-xl border-2" />
+            )}
             <label ref={imgLabelRef} htmlFor="post-picture">
               <ThemedButton
                 onClick={(e) => {
