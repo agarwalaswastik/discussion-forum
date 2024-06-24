@@ -56,7 +56,7 @@ export default function CommunityOptions({ commData }: { commData: CommunityData
         <ThemedButton onClick={handleMember}>{relation === "member" ? "Leave" : "Join"}</ThemedButton>
       )}
       {relation === "owner" && <ThemedButton onClick={handleDelete}>Delete</ThemedButton>}
-      <CommunityCreatePostOption />
+      {loggedInUsername && relation !== "none" && <CommunityCreatePostOption />}
       {(isDeleteLoading || isMemberLoading) && <LoadingOverlay />}
     </div>
   );

@@ -26,6 +26,13 @@ export const postApi = api.injectEndpoints({
       },
       providesTags: ["DisplayedPosts"],
     }),
+    getHomePosts: builder.query<PostData[], Record<string, never>>({
+      query: () => ({
+        url: "/post/home",
+        method: "GET",
+      }),
+      providesTags: ["DisplayedPosts"],
+    }),
     upvotePost: builder.mutation<object, { id: string }>({
       query: ({ id }) => ({
         url: `/post/${id}/vote`,
@@ -57,5 +64,6 @@ export const {
   useDeletePostMutation,
   useDownvotePostMutation,
   useGetPostsQuery,
+  useGetHomePostsQuery,
   useUpvotePostMutation,
 } = postApi;

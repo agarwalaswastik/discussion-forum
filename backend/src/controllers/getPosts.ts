@@ -1,6 +1,7 @@
 import PostTypes from "post";
 import { MyRequestHandler } from "server";
 import Post from "../models/postModel";
+
 /*
  * this controller should send back as response the data of the posts that are queried
  */
@@ -20,10 +21,10 @@ const getPosts: RequestHandler = async (req, res, next) => {
 
     const queriedPosts = posts.filter((post) => {
       let result: boolean = true;
-      const community = post.community as unknown as { name: string };
+      const community = post.community as unknown as { name: string } | null;
       const author = post.author as unknown as { username: string };
 
-      if (communityName && communityName !== community.name) result = false;
+      if (communityName && communityName !== community?.name) result = false;
       if (authorName && authorName !== author.username) result = false;
 
       return result;

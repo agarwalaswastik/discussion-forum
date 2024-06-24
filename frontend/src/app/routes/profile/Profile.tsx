@@ -6,6 +6,7 @@ import ProfileDescription from "./ProfileDescription";
 import ProfilePictureUpload from "./ProfilePictureUpload";
 import ProfileAbout from "./ProfileAbout";
 import type UserData from "../../../types/user";
+import PostList from "../../../common/PostList";
 
 interface ProfileAttributes extends Partial<UserData> {
   isSelf: boolean;
@@ -57,6 +58,7 @@ export default function Profile(props: ProfileAttributes) {
         {props.isSelf && <ProfilePictureUpload />}
         <ProfileAbout isSelf={props.isSelf} about={about} handleSave={handleSaveAbout} />
         <hr className="border-t-slate" />
+        <PostList authorName={username} />
       </div>
       {isLoading && <LoadingOverlay />}
     </>

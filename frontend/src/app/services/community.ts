@@ -5,7 +5,7 @@ export interface CommunityArgs {
   name: string;
 }
 export type CommunityResponse = CommunityData;
-export type GetOwnedCommunitiesResponse = { name: string; picturePath?: string }[];
+export type GetCommunitiesResponse = { name: string; picturePath?: string }[];
 export interface PatchCommunityArgs {
   name: string;
   description?: string;
@@ -21,12 +21,19 @@ export const communityApi = api.injectEndpoints({
       }),
       invalidatesTags: ["OwnedCommunities"],
     }),
-    getOwnedCommunities: builder.query<GetOwnedCommunitiesResponse, Record<string, never>>({
+    getOwnedCommunities: builder.query<GetCommunitiesResponse, Record<string, never>>({
       query: () => ({
         url: "/community/owned",
         method: "GET",
       }),
       providesTags: ["OwnedCommunities"],
+    }),
+    getJoinedCommunities: builder.query<GetCommunitiesResponse, Record<string, never>>({
+      query: () => ({
+        url: "/community/joined",
+        method: "GET",
+      }),
+      providesTags: ["JoinedCommunities"],
     }),
     getCommunity: builder.query<CommunityResponse, CommunityArgs>({
       query: ({ name }) => ({
@@ -49,14 +56,14 @@ export const communityApi = api.injectEndpoints({
         method: "PATCH",
         body: formData,
       }),
-      invalidatesTags: ["DisplayedCommunity", "OwnedCommunities"],
+      invalidatesTags: ["DisplayedCommunity", "OwnedCommunities", "JoinedCommunities"],
     }),
     memberCommunity: builder.mutation<object, CommunityArgs>({
       query: ({ name }) => ({
         url: `/community/${name}/member`,
         method: "PATCH",
       }),
-      invalidatesTags: ["DisplayedCommunity"],
+      invalidatesTags: ["DisplayedCommunity", "JoinedCommunities"],
     }),
     deleteCommunity: builder.mutation<object, CommunityArgs>({
       query: ({ name }) => ({
@@ -71,9 +78,10 @@ export const communityApi = api.injectEndpoints({
 export const {
   useStartCommunityMutation,
   useGetOwnedCommunitiesQuery,
+  useGetJoinedCommunitiesQuery,
   useGetCommunityQuery,
   usePatchCommunityMutation,
   usePatchCommunityPictureMutation,
   useDeleteCommunityMutation,
-  useMemberCommunityMutation
+  useMemberCommunityMutation,
 } = communityApi;

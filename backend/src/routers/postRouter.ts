@@ -6,6 +6,7 @@ import createPost from "../controllers/createPost";
 import getPosts from "../controllers/getPosts";
 import deletePost from "../controllers/deletePost";
 import votePost from "../controllers/votePost";
+import getHomePosts from "../controllers/getHomePosts";
 
 const postRouter = Router();
 
@@ -17,6 +18,9 @@ postRouter.post("/", handleValidation, createPost);
 
 // query posts
 postRouter.get("/", getPosts);
+
+// get home posts
+postRouter.get("/home", verifyToken, getHomePosts);
 
 // delete post
 postRouter.delete("/:id", verifyToken, deletePost);

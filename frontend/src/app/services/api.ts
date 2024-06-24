@@ -23,6 +23,6 @@ const baseQueryWithRetries = retry(baseQuery, { maxRetries: 3 });
 
 export const api = createApi({
   baseQuery: baseQueryWithRetries,
-  tagTypes: ["Auth", "User", "OwnedCommunities", "DisplayedCommunity", "DisplayedPosts"],
+  tagTypes: ["Auth", "User", "OwnedCommunities", "JoinedCommunities", "DisplayedCommunity", "DisplayedPosts"],
   endpoints: () => ({}),
 });

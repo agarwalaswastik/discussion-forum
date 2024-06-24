@@ -18,6 +18,9 @@ communityRouter.post("/", handleValidation, startCommunity);
 // get owned communties
 communityRouter.get("/owned", verifyToken, getOwnedCommunities);
 
+// get joined communities
+communityRouter.get("/joined", verifyToken, getOwnedCommunities);
+
 // update community
 communityRouter.patch("/:name", verifyToken, storeFile("picture"));
 communityRouter.patch("/:name", handleValidation, updateCommunity);

@@ -1,7 +1,7 @@
 interface PostData {
   _id: string;
   author: { username: string };
-  community: { name: string };
+  community: { name: string } | null;
   title: string;
   contents: string;
   picturePath?: string;

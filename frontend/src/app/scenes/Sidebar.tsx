@@ -4,6 +4,7 @@ import SidebarLink from "./SidebarLink";
 import OwnedCommunities from "./OwnedCommunities";
 import { useAppSelector } from "../hooks";
 import { selectLoggedInUsername } from "../../features/user/userSlice";
+import JoinedCommunities from "./JoinedCommunities";
 
 export default function Sidebar() {
   const loggedInUsername = useAppSelector(selectLoggedInUsername);
@@ -21,6 +22,8 @@ export default function Sidebar() {
         </SidebarLink>
         {loggedInUsername && <li className="border-t-slate w-full border-t"></li>}
         {loggedInUsername && <OwnedCommunities />}
+        <li className="border-t-slate w-full border-t"></li>
+        {loggedInUsername && <JoinedCommunities />}
         <li className="border-t-slate w-full border-t"></li>
       </ul>
     </div>

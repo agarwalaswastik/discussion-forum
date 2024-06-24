@@ -47,7 +47,11 @@ export default function PostWidget(props: PostData) {
         <div className="flex-1">
           <div className="text-smaller flex items-center ~gap-1/2">
             <h3 className="text-heading">{props.title}</h3>
-            <Link to={`/community/${props.community.name}`}>g/{props.community.name}</Link>
+            {props.community ? (
+              <Link to={`/community/${props.community.name}`}>g/{props.community.name}</Link>
+            ) : (
+              <p>g/deleted</p>
+            )}
             <Link to={`/profile/${props.author.username}`}>u/{props.author.username}</Link>
           </div>
           <p className="text-content">{props.contents}</p>

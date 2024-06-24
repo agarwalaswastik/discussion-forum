@@ -10,6 +10,8 @@ import { selectThemeMode } from "../features/theme/themeSlice";
 import Sidebar from "./scenes/Sidebar";
 import Navbar from "./scenes/Navbar";
 import CommunityPage from "./routes/community/CommunityPage";
+import AllPage from "./routes/AllPage";
+import HomePage from "./routes/HomePage";
 
 export default function App() {
   const mode = useAppSelector(selectThemeMode);
@@ -28,6 +30,8 @@ export default function App() {
       </aside>
       <main className="bg-primary relative col-span-2 col-start-1 row-start-2 overflow-auto lg:col-span-1 lg:col-start-2">
         <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/all" element={<AllPage />} />
           <Route path="/login" element={loggedInUsername ? <Navigate to="/" /> : <LoginPage />} />
           <Route path="/profile" element={loggedInUsername ? <ProfilePage /> : <Navigate to="/login" />} />
           <Route path="/profile/:username" element={<ProfilePage />} />
