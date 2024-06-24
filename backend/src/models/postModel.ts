@@ -9,7 +9,8 @@ const postSchema = new mongoose.Schema<PostTypes.Model>(
     title: { type: String, required: true },
     contents: { type: String, required: true },
     picturePath: String,
-    upvotes: { type: Number, default: 0 },
+    upvoters: { type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], default: [] },
+    downvoters: { type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], default: [] },
   },
   { timestamps: true }
 );

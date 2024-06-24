@@ -11,6 +11,7 @@ import authRouter from "./routers/authRouter";
 import conversationRouter from "./routers/conversationRouters";
 import userRouter from "./routers/userRouter";
 import communityRouter from "./routers/communityRouter";
+import postRouter from "./routers/postRouter";
 
 import readToken from "./middleware/readToken";
 
@@ -30,7 +31,8 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use("/api/auth", authRouter); // register, login, logout
 app.use("/api/conversation", conversationRouter); // start, get conversations and send messages
 app.use("/api/user", userRouter); // read, update, delete users
-app.use("/api/community", communityRouter); // start communities
+app.use("/api/community", communityRouter); // start, get, delete, update communities
+app.use("/api/post", postRouter); // create, get, delete, upvote posts
 
 app.use("/uploads", express.static(path.join(root, "uploads")));
 app.use(express.static(path.join(root, "frontend", "dist")));

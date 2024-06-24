@@ -8,6 +8,7 @@ import { useDeleteCommunityMutation, useMemberCommunityMutation } from "../../se
 import CommunityPictureUpload from "./CommunityPictureUpload";
 import { useNavigate } from "react-router-dom";
 import CommunityDescOption from "./CommunityDescOption";
+import CommunityCreatePostOption from "./CommunityCreatePostOption";
 
 export default function CommunityOptions({ commData }: { commData: CommunityData }) {
   const loggedInUsername = useAppSelector(selectLoggedInUsername);
@@ -55,6 +56,7 @@ export default function CommunityOptions({ commData }: { commData: CommunityData
         <ThemedButton onClick={handleMember}>{relation === "member" ? "Leave" : "Join"}</ThemedButton>
       )}
       {relation === "owner" && <ThemedButton onClick={handleDelete}>Delete</ThemedButton>}
+      <CommunityCreatePostOption />
       {(isDeleteLoading || isMemberLoading) && <LoadingOverlay />}
     </div>
   );

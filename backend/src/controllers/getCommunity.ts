@@ -4,8 +4,7 @@ import Community from "../models/communityModel";
 
 /*
  * this controller should send back as response community data of the community denoted
- * by the name param. It should also add a joined: boolean variable to the body if the user
- * is authenticated.
+ * by the name param.
  */
 type Params = { name?: string };
 type ResBody = { data?: CommunityTypes.Model };

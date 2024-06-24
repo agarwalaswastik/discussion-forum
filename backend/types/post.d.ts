@@ -10,7 +10,8 @@ namespace PostTypes {
     title: string;
     contents: string;
     picturePath?: string;
-    upvotes?: number;
+    upvoters?: Types.ObjectId[];
+    downvoters?: Types.ObjectId[];
   }
 
   // representation of shape of data stored in the database
