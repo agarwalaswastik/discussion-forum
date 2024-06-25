@@ -16,7 +16,7 @@ const getJoinedCommunities: RequestHandler = async (req, res, next) => {
     const user = res.locals.verifiedUser;
     if (!user) throw new Error("Joined Communities couldn't be retrieved as no verified user was found");
 
-    const communities = await Community.find().select("name picturePath");
+    const communities = await Community.find().select("name picturePath members");
     if (!communities) return res.status(400).json({ error: "No communities found" });
 
     res.status(200).json({ data: communities.filter((comm) => comm.members?.includes(user._id)) });

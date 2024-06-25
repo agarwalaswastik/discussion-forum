@@ -23,7 +23,7 @@ const getHomePosts: RequestHandler = async (_req, res, next) => {
 
     const queriedPosts = posts.filter((post) => {
       const postComm = post.community as unknown as CommunityTypes.Model | null;
-      return postComm && postComm.members?.includes(user._id);
+      return postComm && (postComm.members?.includes(user._id) || postComm.owner.equals(user._id));
     });
 
     res.status(200).json({ data: queriedPosts.map((elem) => elem.toObject()) });

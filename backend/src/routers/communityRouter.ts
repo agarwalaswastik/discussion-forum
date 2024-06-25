@@ -8,6 +8,7 @@ import updateCommunity from "../controllers/updateCommunity";
 import getCommunity from "../controllers/getCommunity";
 import deleteCommunity from "../controllers/deleteCommunity";
 import memberCommunity from "../controllers/memberCommunity";
+import getJoinedCommunities from "../controllers/getJoinedCommunities";
 
 const communityRouter = Router();
 
@@ -19,7 +20,7 @@ communityRouter.post("/", handleValidation, startCommunity);
 communityRouter.get("/owned", verifyToken, getOwnedCommunities);
 
 // get joined communities
-communityRouter.get("/joined", verifyToken, getOwnedCommunities);
+communityRouter.get("/joined", verifyToken, getJoinedCommunities);
 
 // update community
 communityRouter.patch("/:name", verifyToken, storeFile("picture"));
